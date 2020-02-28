@@ -3,15 +3,20 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
 
-function App() {
-  return (
-    <div>
-      <Header />
+class App extends React.Component {
+  state = {
+    auth: false
+  }
+  render() {
+    return (
       <div>
-        Main Page
+        <Header auth={this.state.auth}/>
+        <div>
+          Main Page
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;

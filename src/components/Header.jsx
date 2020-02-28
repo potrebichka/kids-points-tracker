@@ -1,13 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
+import PropTypes from 'prop-types';
 
-function Header() {
+function Header(props) {
     {/* <h1>Kids Points Tracker</h1>
     <Link to="/">Home</Link> | <Link to="/account">Create new post</Link> */}
+    let classAuth ="auth";
+    if (props.auth) {
+        classAuth += " auth-true";
+    } else {
+        classAuth += " auth-false";
+    }
     return (
         <div className="container">
-            <div className="auth">
+            <div className={classAuth}>
                 <header className="clearfix">
                     <div className="userAuth unauthenticated pull-right">
                         <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#registerModal">Register</button>
@@ -22,7 +29,7 @@ function Header() {
                     </div>
                 </header>
                 <hr/>
-                <div className="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="Register" aria-hidden="true">
+                <div className="modal fade" id="registerModal" tabIndex="-1" role="dialog" aria-labelledby="Register" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <form id="registerForm" method="POST">
@@ -32,24 +39,34 @@ function Header() {
                                 </div>
                                 <div className="modal-body">
                                     <div className="form-group">
-                                        <label for="recipient-name" className="control-label">First Name:</label>
-                                        <input type="text" className="form-control" id="registerFirstName"/>
+                                        <label className="control-label">
+                                            First Name:
+                                            <input type="text" className="form-control" id="registerFirstName"/>
+                                        </label>
                                     </div>
                                     <div className="form-group">
-                                        <label for="recipient-name" className="control-label">Last Name:</label>
-                                        <input type="text" className="form-control" id="registerLastName"/>
+                                        <label className="control-label">
+                                            Last Name:
+                                            <input type="text" className="form-control" id="registerLastName"/>
+                                        </label>
                                     </div>
                                     <div className="form-group">
-                                        <label for="recipient-name" className="control-label">Email:</label>
-                                        <input type="text" className="form-control" id="registerEmail"/>
+                                        <label className="control-label">
+                                            Email:
+                                            <input type="text" className="form-control" id="registerEmail"/>
+                                        </label>
                                     </div>
                                     <div className="form-group">
-                                        <label for="message-text" className="control-label">Password:</label>
-                                        <input type="password" className="form-control" id="registerPassword"/>
+                                        <label className="control-label">
+                                            Password:
+                                            <input type="password" className="form-control" id="registerPassword"/>
+                                        </label>
                                     </div>
                                     <div className="form-group">
-                                        <label for="message-text" className="control-label">Confirm Password:</label>
-                                        <input type="password" className="form-control" id="registerConfirmPassword"/>
+                                        <label className="control-label">
+                                            Confirm Password:
+                                            <input type="password" className="form-control" id="registerConfirmPassword"/>
+                                        </label>
                                     </div>
                                 </div>
                                 <div className="modal-footer">
@@ -60,7 +77,7 @@ function Header() {
                         </div>
                     </div>
                 </div>
-                <div className="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+                <div className="modal fade" id="loginModal" tabIndex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <form id="loginForm" method="POST">
@@ -70,12 +87,16 @@ function Header() {
                                 </div>
                                 <div className="modal-body">
                                     <div className="form-group">
-                                        <label for="recipient-name" className="control-label">Email:</label>
-                                        <input type="text" className="form-control" id="loginEmail"/>
+                                        <label className="control-label">
+                                            Email:
+                                            <input type="text" className="form-control" id="loginEmail"/>
+                                        </label>
                                     </div>
                                     <div className="form-group">
-                                        <label for="message-text" className="control-label">Password:</label>
-                                        <input type="password" className="form-control" id="loginPassword"/>
+                                        <label className="control-label">
+                                            Password:
+                                            <input type="password" className="form-control" id="loginPassword"/>
+                                        </label>
                                     </div>
                                 </div>
                                 <div className="modal-footer">
@@ -86,7 +107,7 @@ function Header() {
                         </div>
                     </div>
                 </div>
-                <div className="modal fade" id="savedListModal" tabindex="-1" role="dialog" aria-labelledby="Add Contact" aria-hidden="true">
+                <div className="modal fade" id="savedListModal" tabIndex="-1" role="dialog" aria-labelledby="Add Contact" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                                 <div className="modal-header">
@@ -102,7 +123,7 @@ function Header() {
                         </div>
                     </div>
                 </div>
-                <div className="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="Message" aria-hidden="true">
+                <div className="modal fade" id="messageModal" tabIndex="-1" role="dialog" aria-labelledby="Message" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -123,24 +144,12 @@ function Header() {
                     </div>
                 </div>
             </div>
-            <div className="box" id="box">
-                <h1 className="title">
-                    walk there
-                </h1>
-                <form id="findLocationForm">
-                    <div className="form-group" id="locationInput">
-                        <label for="userLocationInput">Your location:</label>
-                        <input className="form-control" type="text" id="userLocationInput" placeholder="Leave empty to use your current location"/>
-                    </div>
-                    <div className="form-group" id="attractionInput">
-                        <label for="userAttractionInput">Where are you going?</label>
-                        <input className="form-control" type="text" id="userAttractionInput"/>
-                    </div>
-                    <button type="submit" className="btn btn-info">Submit</button>
-                </form>
-            </div>
         </div>
     );
+}
+
+Header.propTypes = {
+    auth: PropTypes.bool
 }
 
 export default Header;
