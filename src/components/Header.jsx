@@ -24,7 +24,9 @@ function Header(props) {
                         <span className="user-info">
                             <span className="user-name"></span>
                         </span>
-                        <button type="button" className="btn btn-secondary" data-toggle="modal" data-target="#savedListModal">Your Places</button>
+                        {/* <button type="button" className="btn btn-secondary" data-toggle="modal" data-target="#savedListModal">Your Children</button> */}
+                        <Link to="/children"><button type="button" className="btn btn-secondary">Your Children</button></Link>
+                        <Link to="/categories"><button type="button" className="btn btn-secondary">Your Categories</button></Link>
                         <button type="button" className="btn btn-success" id="logout">Logout</button>
                     </div>
                 </header>
