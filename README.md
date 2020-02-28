@@ -101,6 +101,16 @@ How should look structure:
             {
 
             }
+        },
+        children:
+        {
+            child1(childrenId):
+            {
+                name: string,
+                points: number,
+                rewards: number,
+                history (*extra)
+            }
         }
     }
 }
