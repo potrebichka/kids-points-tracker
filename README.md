@@ -1,16 +1,15 @@
+# Kids Points Tracker
 
-# Tic Tac Toe
-
-#### _React, Redux: Tic Tac Toe, Last Update 02/27/2020_
+#### _React, Redux: Kids Points Tracker, Last Update 02/28/2020_
 
 ## Description
-A tic tac toe game with React and Redux. 
+A application that counts points for kids. 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Component Structure
 
-![Diagram Flow](./src/assets/images/TicTacToe.jpg)
+![Diagram Flow](./src/assets/images/Placeholder.jpg)
 
 ## Prerequisites
 * NodeJS
@@ -38,10 +37,43 @@ $ npm run start
 [Tap Room](https://potrebichka.github.io/TapRoom/)  -->
 
 
+## Project Description
+
+### Project's Purpose or Goal: (What will it do for users?)###
+Kids can earn and collect points for doing homework, exercises, etc. Parents can track points. Kids can exchange points for rewards/toys.
+
+### List the absolute minimum features the project requires to meet this purpose or goal: ###
+* Parents can add categories (reading, writing, homework) to track points and specify different amount of points for doing things connected to this category.
+* Parents can have multiple children connected to their account
+* Children and parent can add rewards to list and check progress of earning rewards.
+* Webpage should be available online and storing data in Firebase.
+
+### What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is specific to your track, and your language) will you use to create this MVP? List them all here. Be specific.###
+* HTML
+* CSS
+* Bootstrap
+* React
+* Redux
+* Firebase
+
+### If you finish developing the minimum viable product (MVP) with time to spare, what will you work on next? Describe these features here: Be specific. ###
+* Parents can authenticate/authorize.
+* Amazon MarketPlace API - adding reward item. Searching?
+* Create API(C#) for searching through book library and assign different number of points connected to this books depending on difficulty, frequency of reading, etc.
+* Allow children choose from selection of icons (background, text color ?) connected to their accounts. 
+* Create different types of accounts: parent, children. Parents and children will be able to connect accounts and share information.
+* Gmail API. Parent will get email when child is requested reward.
+
+### What additional tools, frameworks, libraries, APIs, or other resources will these additional features require?###
+
+* ASP.NET Core
+* C#.NET
+* Entity Framework
+
+
 ## Specs
 
-* User is able to play tic-tac-toe game.
-* User is able to see results.
+
 
 
 ## Available Scripts
