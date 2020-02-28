@@ -9,7 +9,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Component Structure
 
-![Diagram Flow](./src/assets/images/Placeholder.jpg)
+![Diagram Flow](./src/assets/images/KidsPointsTracker.jpg)
 
 ## Prerequisites
 * NodeJS
@@ -75,7 +75,9 @@ Kids can earn and collect points for doing homework, exercises, etc. Parents can
 
 FIREBASE - json
 How should look structure:
-{user_id:
+```
+{
+    user_id:
     {
         categories: 
         {
@@ -102,6 +104,9 @@ How should look structure:
         }
     }
 }
+```
+
+Research how to include CRUD functionality to project
 
 ## Specs
 
