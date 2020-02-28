@@ -63,6 +63,7 @@ Kids can earn and collect points for doing homework, exercises, etc. Parents can
 * Allow children choose from selection of icons (background, text color ?) connected to their accounts. 
 * Create different types of accounts: parent, children. Parents and children will be able to connect accounts and share information.
 * Gmail API. Parent will get email when child is requested reward.
+* Goodreads API  to include book information
 
 ### What additional tools, frameworks, libraries, APIs, or other resources will these additional features require?###
 
@@ -70,6 +71,37 @@ Kids can earn and collect points for doing homework, exercises, etc. Parents can
 * C#.NET
 * Entity Framework
 
+## Project researching
+
+FIREBASE - json
+How should look structure:
+{user_id:
+    {
+        categories: 
+        {
+            category1(categoryId): 
+            {
+                points: number,
+                description: string,
+                image: string(url),
+                items: 
+                {
+                    item1(itemId) 
+                    {
+                        description: string,
+                        image: string(url)
+                    }
+                    item2,
+                    item3
+                }
+            },
+            category2:
+            {
+
+            }
+        }
+    }
+}
 
 ## Specs
 
