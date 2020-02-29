@@ -1,18 +1,27 @@
 import React from 'react';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
+import EditChild from './EditChild';
 
 class Child extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             points: 0,
-            showInfo: false
+            showInfo: false,
+            showEditForm: false
         }
     }
 
     handleShowInfoClick = () => {
         this.setState({showInfo: !this.state.showInfo});
+    }
+
+    handleShowEditFormClick = () => {
+        this.setState({
+            showInfo: false,
+            showEditForm: true
+        })
     }
 
     render() {
@@ -29,10 +38,14 @@ class Child extends React.Component {
                         <p>Birthday: {this.props.birthday}</p>
                         <p>Your child is {yearDifference} years old.</p>
                         <p>Points: {this.state.points}</p>
-                        <button type="button" className="btn btn-success">Edit Child</button>
+                        <button type="button" className="btn btn-success" onClick={this.handleShowEditFormClick}>Edit Child</button>
                         <button type="button" className="btn btn-danger">Delete Child</button>
                     </div>
                     : null
+                }
+                {this.state.showEditForm ? 
+                    <EditChild id={this.props.id} name={this.props.name} birthday={this.props.birthday} onChildEditing={this.handleChildEditing}/>
+                : null
                 }
             </div>
         );
@@ -42,7 +55,8 @@ class Child extends React.Component {
 Child.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
-    birthday: PropTypes.instanceOf(Date)
+    birthday: PropTypes.instanceOf(Date),
+    onChildEditing: PropTypes.func
 }
 
 export default Child;
