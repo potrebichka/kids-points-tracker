@@ -2,20 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const EditChild = (props) => {
-    let _name = props.name;
-    let _birthday = props.birthday;
+    let _name = null;
+    let _birthday = null;
 
-    handleEditChildFormSubmission = (event)  => {
+    function handleEditChildFormSubmission (event) {
         event.preventDefault();
-        this.props.onChildEditing({name: this._name.value, birthday: this._birthday.value});
-        this._name.value = '';
-        this._birthday.value = null;
-        this.setState({toList: true})
+        props.onChildEditing({name: _name.value, birthday: _birthday.value});
+        _name.value = '';
+        _birthday.value = null;
     }
 
     return (
         <div>
-            <form onSubmit={this.handleEditChildFormSubmission}>
+            <form onSubmit={handleEditChildFormSubmission}>
                 <h2>Edit Child</h2>
                 <label>Enter a name:
                     <input
@@ -47,7 +46,7 @@ const EditChild = (props) => {
 
 EditChild.propTypes = {
     name: PropTypes.string,
-    birthday: PropTypes.instanceOf(Date),
+    birthday: PropTypes.string,
     onChildEditing: PropTypes.func
 }
 

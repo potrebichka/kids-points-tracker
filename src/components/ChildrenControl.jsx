@@ -31,6 +31,11 @@ class ChildrenControl extends React.Component {
         this.setState({showCreateNewChildForm: true})
     }
 
+    handleChildEditing = (updatedChild) => {
+        const updatedChildState = {...this.state.children, [updatedChild.id]: updatedChild};
+        this.setState({children: updatedChildState})
+    }
+
     render() {
         return (
             <div>
@@ -42,7 +47,7 @@ class ChildrenControl extends React.Component {
                             <p>No children have been added</p> 
                             :
                             Object.keys(this.state.children).map(childId =>{
-                                return <Child id={childId} name={this.state.children[childId].name} birthday={this.state.children[childId].birthday}/>
+                                return <Child id={childId} name={this.state.children[childId].name} birthday={this.state.children[childId].birthday} onChildEditing={this.handleChildEditing} key={childId}/>
                             })
                         }
                         <Link to='/children/new'><button type="button" className="btn btn-info" onClick={this.handleClick}>Add a new child</button></Link>

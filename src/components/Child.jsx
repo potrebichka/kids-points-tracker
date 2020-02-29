@@ -24,6 +24,15 @@ class Child extends React.Component {
         })
     }
 
+    handleChildEditing = (updatedChild) => {
+        updatedChild.id = this.props.id;
+        this.props.onChildEditing(updatedChild);
+        this.setState({
+            showInfo: true,
+            showEditForm: false
+        })
+    }
+
     render() {
         let yearDifference = Moment(new Date()).diff(Moment(this.props.birthday), 'years');
         const name = this.state.showInfo ? "Hide Info" : "Show Info";
@@ -55,7 +64,7 @@ class Child extends React.Component {
 Child.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
-    birthday: PropTypes.instanceOf(Date),
+    birthday: PropTypes.string,
     onChildEditing: PropTypes.func
 }
 
