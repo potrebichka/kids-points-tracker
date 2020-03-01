@@ -36,6 +36,12 @@ class ChildrenControl extends React.Component {
         this.setState({children: updatedChildState})
     }
 
+    handleChildDeletion = (id) => {
+        let copyState = {...this.state.children};
+        delete copyState[id];
+        this.setState({children: copyState})
+    }
+
     render() {
         return (
             <div>
@@ -47,7 +53,7 @@ class ChildrenControl extends React.Component {
                             <p>No children have been added</p> 
                             :
                             Object.keys(this.state.children).map(childId =>{
-                                return <Child id={childId} name={this.state.children[childId].name} birthday={this.state.children[childId].birthday} onChildEditing={this.handleChildEditing} key={childId}/>
+                                return <Child id={childId} name={this.state.children[childId].name} birthday={this.state.children[childId].birthday} onChildEditing={this.handleChildEditing} key={childId} onDeleteClick={(childId) => this.handleChildDeletion}/>
                             })
                         }
                         <Link to='/children/new'><button type="button" className="btn btn-info" onClick={this.handleClick}>Add a new child</button></Link>

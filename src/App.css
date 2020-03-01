@@ -50,6 +50,9 @@ font-family: 'Raleway', sans-serif;
 
 .control-label {
   color: cornflowerblue;
+  font-family: Arial;
+  font-size: 25px;
+  font-weight: 200
 }
 
 header h1 {

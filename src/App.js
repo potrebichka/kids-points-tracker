@@ -9,7 +9,7 @@ import Error404 from './components/Error404';
 
 class App extends React.Component {
   state = {
-    auth: true
+    auth: false
   }
   render() {
     return (
