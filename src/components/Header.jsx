@@ -8,15 +8,24 @@ const Header = (props) => {
 
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
+    const [showMessage, setShowMessage] = useState(false);
 
-    const handleCloseRegister = () => setShowRegister(false);
+    const handleCloseRegister = () => {setShowRegister(false); setShowMessage(false)}
     const handleShowRegister = () => setShowRegister(true);
 
-    const handleCloseLogin = () => setShowLogin(false);
+    const handleCloseLogin = () => {setShowLogin(false); setShowMessage(false)}
     const handleShowLogin = () => setShowLogin(true);
+
+    const handleCloseMessage = () => setShowMessage(false);
+    const handleShowMessage = () => setShowMessage(true);
 
     const handleSubmitRegister = () => {
         console.log('Submit');
+    }
+
+    const handleSubmitLogin = () => {
+        console.log('Login');
+        handleShowMessage();
     }
 
     {/* <h1>Kids Points Tracker</h1>
@@ -83,84 +92,42 @@ const Header = (props) => {
                         </Modal.Footer>
                     </Form>
                 </Modal>
-              
-                                {/* 
-
-
-                                <div className="modal-footer">
-                                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" className="btn btn-primary" id="doRegister">Register</button>
-                                </div>
-                            </form>
+                <Modal show={showLogin} onHide={handleCloseLogin}>
+                    <Form onSubmit={handleSubmitLogin}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Login</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form.Group controlId="loginEmail">
+                                <Form.Label className="control-label">Email:</Form.Label>
+                                <Form.Control type="email"></Form.Control>
+                            </Form.Group>
+                            <Form.Group controlId="loginPassword">
+                                <Form.Label className="control-label">Password:</Form.Label>
+                                <Form.Control type="text"></Form.Control>
+                            </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="default" onClick={handleCloseLogin}>Close</Button>
+                            <Button variant="primary" type="submit" onClick={handleCloseLogin}>Login</Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal>
+                <Modal show={showMessage} onHide={handleCloseMessage}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Message</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Footer>
+                        <div className="pre-auth">
+                            <Button variant="default" className="pull-left" onClick={handleCloseMessage}>Close</Button>
+                            <span>
+                                <Button variant="primary" onClick={handleShowRegister}>Register</Button>
+                                <Button variant="success" onClick={handleShowLogin}>Login</Button>
+                            </span>
                         </div>
-                    </div>
-                </div>
-                <div className="modal fade" id="loginModal" tabIndex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <form id="loginForm" method="POST">
-                                <div className="modal-header">
-                                <h4 className="modal-title" id="loginModalLabel">Login</h4>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </div>
-                                <div className="modal-body">
-                                    <div className="form-group">
-                                        <label className="control-label">
-                                            Email:
-                                            <input type="text" className="form-control" id="loginEmail"/>
-                                        </label>
-                                    </div>
-                                    <div className="form-group">
-                                        <label className="control-label">
-                                            Password:
-                                            <input type="password" className="form-control" id="loginPassword"/>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="modal-footer">
-                                <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" className="btn btn-primary" id="doLogin">Login</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div className="modal fade" id="savedListModal" tabIndex="-1" role="dialog" aria-labelledby="Add Contact" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                                <div className="modal-header">
-                                    <h4 className="modal-title" id="savedListModalLabel">Saved Places</h4>
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </div>
-                                <div className="modal-body" id="savedPlacesList">
-
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="modal fade" id="messageModal" tabIndex="-1" role="dialog" aria-labelledby="Message" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h4 className="modal-title" id="messageModalLabel">Message</h4>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <div className="modal-footer">
-                                <div className="pre-auth">
-                                <button type="button" className="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <span className="">
-                                    <button type="submit" className="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#registerModal">Register</button>
-                                    <button type="submit" className="btn btn-success" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">Login</button>
-                                </span>
-                                </div>
-                                <div className="post-auth"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
+                        <div className="post-auth"></div>
+                    </Modal.Footer>
+                </Modal>
             </div>
         </div>
     );
