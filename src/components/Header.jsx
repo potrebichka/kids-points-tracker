@@ -6,6 +6,8 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import RegisterPage from './Register';
 import LoginPage from './Login';
 import SignOut from './SignOut';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 const Header = (props) => {
 
@@ -30,8 +32,8 @@ const Header = (props) => {
         props.onAuthStatusChange();
     }
 
-    {/* <h1>Kids Points Tracker</h1>
-    <Link to="/">Home</Link> | <Link to="/account">Create new post</Link> */}
+    
+    {/* <Link to="/">Home</Link> | <Link to="/account">Create new post</Link> */}
     let classAuth ="auth";
     if (props.auth) {
         classAuth += " auth-true";
@@ -39,11 +41,13 @@ const Header = (props) => {
         classAuth += " auth-false";
     }
     return (
-        <div className="container">
+        <div className="header">
             <div className={classAuth}>
+                <span className="title">Kids Points Tracker   </span>  
                 <header className="clearfix">
                     <div className="userAuth unauthenticated pull-right">
-                        <Link to="/"><button type="button" className="btn btn-secondary">Home</button></Link>
+                                  
+                        <Link to="/"><button type="button" className="btn btn-secondary"><FontAwesomeIcon icon={faHome} /> Home</button></Link>
                         <Button variant="primary" onClick={handleShowRegister}>Register</Button>
                         <Button variant="success" onClick={handleShowLogin}>Login</Button>
                     </div>
@@ -58,10 +62,7 @@ const Header = (props) => {
                     </div>
                 </header>
                 <hr/>
-                <Modal show={showRegister} onHide={handleCloseRegister}>
-                    {/* <FirebaseContext.Consumer>
-                        {firebase => <RegisterForm firebase={firebase} onCloseRegister={handleCloseRegister}/>}
-                    </FirebaseContext.Consumer> */}
+                <Modal show={showRegister} onHide={handleCloseRegister}>}
                     <RegisterPage  onCloseRegister={handleCloseRegister} onAuthSuccess={handleAuthChange}/>
                 </Modal>
                 <Modal show={showLogin} onHide={handleCloseLogin}>

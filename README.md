@@ -1,6 +1,6 @@
 # Kids Points Tracker
 
-#### _React, Redux: Kids Points Tracker, Last Update 02/28/2020_
+#### _React, Redux: Kids Points Tracker, Last Update 03/03/2020_
 
 ## Description
 A application that counts points for kids. 

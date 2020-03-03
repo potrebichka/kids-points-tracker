@@ -18,12 +18,14 @@ class App extends React.Component {
     return (
       <div>
         <Header auth={this.state.auth} onAuthStatusChange={this.handleAuthStatusChange}/>
+        <div className="opacity">
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/children' component={ChildrenControl} />
           <Route path='/categories' component={CategoriesControl}/>
           <Route component={Error404} />
         </Switch>
+        </div>
       </div>
     );
   }
