@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Button, Modal, Form } from 'react-bootstrap';
 import RegisterPage from './Register';
 import LoginPage from './Login';
-// import {FirebaseContext} from './Firebase';
+import SignOut from './SignOut';
 
 const Header = (props) => {
 
@@ -24,7 +24,7 @@ const Header = (props) => {
 
     const handleRegisterLink = () => {setShowLogin(false); setShowRegister(true)}
 
-    const handleAuthSuccess = () => {
+    const handleAuthChange = () => {
         setShowRegister(false);
         setShowLogin(false);
         props.onAuthStatusChange();
@@ -54,7 +54,7 @@ const Header = (props) => {
                         <Link to="/"><button type="button" className="btn btn-secondary">Home</button></Link>
                         <Link to="/children"><Button variant="secondary">Your Children</Button></Link>
                         <Link to="/categories"><Button variant="secondary">Your Categories</Button></Link>
-                        <Button variant="success">Logout</Button>
+                        <SignOut onAuthChange={handleAuthChange}/>
                     </div>
                 </header>
                 <hr/>
@@ -62,10 +62,10 @@ const Header = (props) => {
                     {/* <FirebaseContext.Consumer>
                         {firebase => <RegisterForm firebase={firebase} onCloseRegister={handleCloseRegister}/>}
                     </FirebaseContext.Consumer> */}
-                    <RegisterPage  onCloseRegister={handleCloseRegister} onAuthSuccess={handleAuthSuccess}/>
+                    <RegisterPage  onCloseRegister={handleCloseRegister} onAuthSuccess={handleAuthChange}/>
                 </Modal>
                 <Modal show={showLogin} onHide={handleCloseLogin}>
-                    <LoginPage onCloseLogin={handleCloseLogin} onRegisterLink={handleRegisterLink} onAuthSuccess={handleAuthSuccess}/>
+                    <LoginPage onCloseLogin={handleCloseLogin} onRegisterLink={handleRegisterLink} onAuthSuccess={handleAuthChange}/>
                 </Modal>
                 <Modal show={showMessage} onHide={handleCloseMessage}>
                     <Modal.Header closeButton>

@@ -17,12 +17,13 @@ class LoginForm extends React.Component {
     }
 
     onSubmit = event => {
-        const {email, passwordOne} = this.state;
+        const {email, password} = this.state;
 
         this.props.firebase
-            .doSignInWithEmailAndPassword(email, passwordOne)
+            .doSignInWithEmailAndPassword(email, password)
             .then(authUser => {
                 this.setState({...INITIAL_STATE});
+                console.log('Success');
             })
             .catch(error => {
                 this.setState({error});
