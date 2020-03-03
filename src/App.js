@@ -11,10 +11,13 @@ class App extends React.Component {
   state = {
     auth: false
   }
+
+  handleAuthStatusChange = () => this.setState({auth: !this.state.auth})
+
   render() {
     return (
       <div>
-        <Header auth={this.state.auth}/>
+        <Header auth={this.state.auth} onAuthStatusChange={this.handleAuthStatusChange}/>
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/children' component={ChildrenControl} />

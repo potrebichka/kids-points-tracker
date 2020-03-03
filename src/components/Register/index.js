@@ -29,11 +29,10 @@ class RegisterForm extends React.Component {
                 this.setState({...INITIAL_STATE});
             })
             .catch(error => {
-                console.log(error);
                 this.setState({error});
             }).then(() => {
                 if (!this.state.error) {
-                    this.props.onCloseRegister();
+                    this.props.onAuthSuccess();
                 }
             })
         
@@ -98,14 +97,19 @@ class RegisterForm extends React.Component {
 }
 
 RegisterForm.propTypes = {
-    onCloseRegister: PropTypes.func
+    onCloseRegister: PropTypes.func,
+    onAuthSuccess: PropTypes.func
 }
 
 const RegisterPage = withFirebase(RegisterForm);
 
-const RegisterLink = () => (
-    <p>Dont' have an account? Register!</p>
+const RegisterLink = (props) => (
+    <p>Dont' have an account? <a href="#" onClick={props.onRegisterLink}>Register!</a></p>
 )
+
+RegisterLink.propTypes = {
+    onRegisterLink: PropTypes.func
+}
 
 export default RegisterPage;
 

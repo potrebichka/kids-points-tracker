@@ -4,6 +4,7 @@ import '../App.css';
 import PropTypes from 'prop-types';
 import { Button, Modal, Form } from 'react-bootstrap';
 import RegisterPage from './Register';
+import LoginPage from './Login';
 // import {FirebaseContext} from './Firebase';
 
 const Header = (props) => {
@@ -21,13 +22,12 @@ const Header = (props) => {
     const handleCloseMessage = () => setShowMessage(false);
     const handleShowMessage = () => setShowMessage(true);
 
-    const handleSubmitRegister = () => {
-        console.log('Submit');
-    }
+    const handleRegisterLink = () => {setShowLogin(false); setShowRegister(true)}
 
-    const handleSubmitLogin = () => {
-        console.log('Login');
-        handleShowMessage();
+    const handleAuthSuccess = () => {
+        setShowRegister(false);
+        setShowLogin(false);
+        props.onAuthStatusChange();
     }
 
     {/* <h1>Kids Points Tracker</h1>
@@ -46,19 +46,15 @@ const Header = (props) => {
                         <Link to="/"><button type="button" className="btn btn-secondary">Home</button></Link>
                         <Button variant="primary" onClick={handleShowRegister}>Register</Button>
                         <Button variant="success" onClick={handleShowLogin}>Login</Button>
-                        {/* <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#registerModal">Register</button>
-                        <button type="button" className="btn btn-success" data-toggle="modal" data-target="#loginModal">Login</button> */}
                     </div>
                     <div className="userAuth authenticated pull-right">
                         <span className="user-info">
                             <span className="user-name"></span>
                         </span>
-                        {/* <button type="button" className="btn btn-secondary" data-toggle="modal" data-target="#savedListModal">Your Children</button> */}
                         <Link to="/"><button type="button" className="btn btn-secondary">Home</button></Link>
                         <Link to="/children"><Button variant="secondary">Your Children</Button></Link>
                         <Link to="/categories"><Button variant="secondary">Your Categories</Button></Link>
                         <Button variant="success">Logout</Button>
-                        {/* <button type="button" className="btn btn-success" id="logout">Logout</button> */}
                     </div>
                 </header>
                 <hr/>
@@ -66,60 +62,10 @@ const Header = (props) => {
                     {/* <FirebaseContext.Consumer>
                         {firebase => <RegisterForm firebase={firebase} onCloseRegister={handleCloseRegister}/>}
                     </FirebaseContext.Consumer> */}
-                        <RegisterPage  onCloseRegister={handleCloseRegister}/>
-                    
-                    {/* <Form onSubmit={handleSubmitRegister}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Register</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Form.Group controlId="registerFirstName">
-                                <Form.Label className="control-label">First Name:</Form.Label>
-                                <Form.Control type="text"></Form.Control>
-                            </Form.Group>
-                            <Form.Group controlId="registerLastName">
-                                <Form.Label className="control-label">Last Name:</Form.Label>
-                                <Form.Control type="text"></Form.Control>
-                            </Form.Group>
-                            <Form.Group controlId="registerEmail">
-                                <Form.Label className="control-label">Email:</Form.Label>
-                                <Form.Control type="email"></Form.Control>
-                            </Form.Group>
-                            <Form.Group controlId="registerPassword">
-                                <Form.Label className="control-label">Password:</Form.Label>
-                                <Form.Control type="text"></Form.Control>
-                            </Form.Group>
-                            <Form.Group controlId="registerConformPassword">
-                                <Form.Label className="control-label">Confirm Password:</Form.Label>
-                                <Form.Control type="text"></Form.Control>
-                            </Form.Group>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="default" onClick={handleCloseRegister}>Close</Button>
-                            <Button variant="primary" type="submit" onClick={handleCloseRegister}>Register</Button>
-                        </Modal.Footer>
-                    </Form> */}
+                    <RegisterPage  onCloseRegister={handleCloseRegister} onAuthSuccess={handleAuthSuccess}/>
                 </Modal>
                 <Modal show={showLogin} onHide={handleCloseLogin}>
-                    <Form onSubmit={handleSubmitLogin}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Login</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Form.Group controlId="loginEmail">
-                                <Form.Label className="control-label">Email:</Form.Label>
-                                <Form.Control type="email"></Form.Control>
-                            </Form.Group>
-                            <Form.Group controlId="loginPassword">
-                                <Form.Label className="control-label">Password:</Form.Label>
-                                <Form.Control type="text"></Form.Control>
-                            </Form.Group>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="default" onClick={handleCloseLogin}>Close</Button>
-                            <Button variant="primary" type="submit" onClick={handleCloseLogin}>Login</Button>
-                        </Modal.Footer>
-                    </Form>
+                    <LoginPage onCloseLogin={handleCloseLogin} onRegisterLink={handleRegisterLink} onAuthSuccess={handleAuthSuccess}/>
                 </Modal>
                 <Modal show={showMessage} onHide={handleCloseMessage}>
                     <Modal.Header closeButton>
@@ -142,7 +88,8 @@ const Header = (props) => {
 }
 
 Header.propTypes = {
-    auth: PropTypes.bool
+    auth: PropTypes.bool,
+    onAuthStatusChange: PropTypes.func
 }
 
 export default Header;
