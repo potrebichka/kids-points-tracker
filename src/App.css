@@ -337,9 +337,14 @@ button.btn-floating {
   transform: translate(-35px, -270px)
   }
 
-  .user-name {
-    font-weight: 600;
-    font-size: 30px;
-    color: black;
-    background-color: white;
-  }
+.user-name {
+  font-weight: 600;
+  font-size: 30px;
+  color: black;
+  background-color: white;
+}
+
+.error-message {
+  color: red;
+  font-size: 20px;
+}

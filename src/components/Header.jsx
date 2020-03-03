@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 import PropTypes from 'prop-types';
 import { Button, Modal, Form } from 'react-bootstrap';
+import RegisterPage from './Register';
+// import {FirebaseContext} from './Firebase';
 
 const Header = (props) => {
 
@@ -41,6 +43,7 @@ const Header = (props) => {
             <div className={classAuth}>
                 <header className="clearfix">
                     <div className="userAuth unauthenticated pull-right">
+                        <Link to="/"><button type="button" className="btn btn-secondary">Home</button></Link>
                         <Button variant="primary" onClick={handleShowRegister}>Register</Button>
                         <Button variant="success" onClick={handleShowLogin}>Login</Button>
                         {/* <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#registerModal">Register</button>
@@ -60,7 +63,12 @@ const Header = (props) => {
                 </header>
                 <hr/>
                 <Modal show={showRegister} onHide={handleCloseRegister}>
-                    <Form onSubmit={handleSubmitRegister}>
+                    {/* <FirebaseContext.Consumer>
+                        {firebase => <RegisterForm firebase={firebase} onCloseRegister={handleCloseRegister}/>}
+                    </FirebaseContext.Consumer> */}
+                        <RegisterPage  onCloseRegister={handleCloseRegister}/>
+                    
+                    {/* <Form onSubmit={handleSubmitRegister}>
                         <Modal.Header closeButton>
                             <Modal.Title>Register</Modal.Title>
                         </Modal.Header>
@@ -90,7 +98,7 @@ const Header = (props) => {
                             <Button variant="default" onClick={handleCloseRegister}>Close</Button>
                             <Button variant="primary" type="submit" onClick={handleCloseRegister}>Register</Button>
                         </Modal.Footer>
-                    </Form>
+                    </Form> */}
                 </Modal>
                 <Modal show={showLogin} onHide={handleCloseLogin}>
                     <Form onSubmit={handleSubmitLogin}>
