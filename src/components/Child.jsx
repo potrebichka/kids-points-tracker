@@ -48,7 +48,7 @@ class Child extends React.Component {
                         <p>Your child is {yearDifference} years old.</p>
                         <p>Points: {this.state.points}</p>
                         <button type="button" className="btn btn-success" onClick={this.handleShowEditFormClick}>Edit Child</button>
-                        <button type="button" className="btn btn-danger" onClick={this.onDeleteClick}>Delete Child</button>
+                        <button type="button" className="btn btn-danger" onClick={this.props.onDeleteClick}>Delete Child</button>
                     </div>
                     : null
                 }

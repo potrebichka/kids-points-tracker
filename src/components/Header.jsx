@@ -56,8 +56,8 @@ const Header = (props) => {
                             <span className="user-name"></span>
                         </span>
                         <Link to="/"><button type="button" className="btn btn-secondary">Home</button></Link>
-                        <Link to="/children"><Button variant="secondary">Your Children</Button></Link>
-                        <Link to="/categories"><Button variant="secondary">Your Categories</Button></Link>
+                        <Link to="/children"><Button variant="success">Your Children</Button></Link>
+                        <Link to="/categories"><Button variant="info">Your Categories</Button></Link>
                         <SignOut onAuthChange={handleAuthChange}/>
                     </div>
                 </header>
