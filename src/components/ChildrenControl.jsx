@@ -15,18 +15,18 @@ class ChildrenControl extends React.Component {
     componentDidMount() {
         if (this.props.auth) {
         this.props.firebase.dbRef.ref("children/" + this.props.firebase.auth.currentUser.uid).once("value")
-                .then(snapshot => 
-                    {
-                        let newChildrenList = {...this.state.children}
-                        for (let key in snapshot.val()) {
-                            newChildrenList = {
-                                ...newChildrenList, 
-                                [key] : 
-                                    {name: snapshot.val()[key].name, 
-                                    birthday: snapshot.val()[key].birthday}};
-                        }
-                        this.setState({children: newChildrenList});
-                })
+            .then(snapshot => 
+                {
+                    let newChildrenList = {...this.state.children}
+                    for (let key in snapshot.val()) {
+                        newChildrenList = {
+                            ...newChildrenList, 
+                            [key] : 
+                                {name: snapshot.val()[key].name, 
+                                birthday: snapshot.val()[key].birthday}};
+                    }
+                    this.setState({children: newChildrenList});
+            })
          }
     }
 
@@ -75,7 +75,7 @@ class ChildrenControl extends React.Component {
                             <div><p>No children have been added!</p> <hr/></div>
                             :
                             Object.keys(this.state.children).map(childId =>{
-                                return <div><Child id={childId} name={this.state.children[childId].name} birthday={this.state.children[childId].birthday} onChildEditing={this.handleChildEditing} key={childId} onDeleteClick={() => {this.handleChildDeletion(childId)}}/></div>
+                                return <Child id={childId} name={this.state.children[childId].name} birthday={this.state.children[childId].birthday} onChildEditing={this.handleChildEditing} key={childId} onDeleteClick={() => {this.handleChildDeletion(childId)}}/>
                             })
                         }
                         <Link to='/children/new'><button type="button" className="btn btn-info" onClick={this.handleClick}>Add a new child</button></Link>

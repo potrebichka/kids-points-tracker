@@ -3,20 +3,18 @@ import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import {Modal, Form, Button} from 'react-bootstrap';
 
-class NewChild extends React.Component {
+class NewCategory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {toList: false}
         this._name = null;
-        this._birthday = null;
         
     }
 
-    handleNewChildFormSubmission = (event)  => {
+    handleNewCategoryFormSubmission = (event)  => {
         event.preventDefault();
-        this.props.onNewChildCreation({name: this._name.value, birthday: this._birthday.value});
+        this.props.onNewCategoryCreation({name: this._name.value, items: {}});
         this._name.value = '';
-        this._birthday.value = null;
         this.setState({toList: true})
     }
 
@@ -27,31 +25,22 @@ class NewChild extends React.Component {
     render() 
     {
         if (this.state.toList) {
-            return <Redirect to="/children"/>
+            return <Redirect to="/categories"/>
         } 
         return (
             <Modal show onHide={this.handleClose}>
-                <Form onSubmit={this.handleNewChildFormSubmission}>
+                <Form onSubmit={this.handleNewCategoryFormSubmission}>
                     <Modal.Header closeButton>
-                        <Modal.Title>New Child</Modal.Title>
+                        <Modal.Title>New Category</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form.Group>
-                            <Form.Label className="control-label">Enter a name:</Form.Label>
+                            <Form.Label className="control-label">Enter a name of category:</Form.Label>
                             <Form.Control 
                                 type="text"
-                                id="name"
-                                placeholder="Name of child" 
+                                id="category"
+                                placeholder="Name of category" 
                                 ref={(input) => {this._name = input;}}>
-                            </Form.Control>
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label className="control-label">Enter birthday:</Form.Label>
-                            <Form.Control
-                                type="date"
-                                id="birthday"
-                                className="form-control"
-                                ref={(input) => {this._birthday = input;}}>
                             </Form.Control>
                         </Form.Group>
                     </Modal.Body>
@@ -64,8 +53,8 @@ class NewChild extends React.Component {
     }
 }
 
-NewChild.propTypes = {
-    onNewChildCreation: PropTypes.func
+NewCategory.propTypes = {
+    onNewCategoryCreation: PropTypes.func
 }
 
-export default NewChild;
+export default NewCategory;

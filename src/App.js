@@ -23,9 +23,12 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={Home} />
           <FirebaseContext.Consumer>
-            {firebase => {return <Route path='/children' render={() => <ChildrenControl auth={this.state.auth} firebase={firebase}/>} />}}
+            {firebase => {return <div>
+            <Route path='/children' render={() => <ChildrenControl auth={this.state.auth} firebase={firebase}/>}/>
+            <Route path="/categories" render={() =>   <CategoriesControl auth={this.state.auth} firebase={firebase}/>}/>
+            </div>
+            }}
           </FirebaseContext.Consumer>
-          <Route path='/categories' component={CategoriesControl}/>
           <Route component={Error404} />
         </Switch>
         </div>

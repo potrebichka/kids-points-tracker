@@ -381,14 +381,14 @@ button.btn-floating {
   font-size: 20px
 }
 
-.children {
+.children, .categories {
   text-align: center;
 }
 
-.children button {
+.children button, .categories button {
   font-size: 20px;
 }
 
-.children p {
+.children p, .categories p {
   font-size: 20px;
 }
