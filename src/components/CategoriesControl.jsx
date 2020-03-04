@@ -14,23 +14,34 @@ class CategoriesControl extends React.Component {
     }
     
     componentDidMount() {
-        this.props.firebase.dbRef.ref("categories/" + this.props.firebase.auth.currentUser.uid).once("value")
-            .then(snapshot => {
-                let newCategoriesList = {...this.state.categories};
-                for (let key in snapshot.val()) {
-                    newCategoriesList = {
-                        ...newCategoriesList,
-                        [key]:
-                            {name: snapshot.val()[key].name,
-                            items: snapshot.val()[key].items}
+        if (this.props.auth) {
+            this.props.firebase.dbRef.ref("/categories/" + this.props.firebase.auth.currentUser.uid).once("value")
+                .then(snapshot => {
+                    console.log(snapshot.val());
+                    let newCategoriesList = {...this.state.categories};
+                    for (let key in snapshot.val()) {
+                        newCategoriesList = {
+                            ...newCategoriesList,
+                            [key]:
+                                {name: snapshot.val()[key].name,
+                                items: snapshot.val()[key].items}
+                        }
                     }
-                }
-                this.setState({categories: newCategoriesList})
-            })
+                    this.setState({categories: newCategoriesList})
+                })
+        }
     }
 
-    handleNewCategoryCreation = (category) => {
+    handleNewCategoryCreation = (newCategory) => {
+        var newCategoryId = this.props.firebase.dbRef.ref('categories/' +  this.props.firebase.auth.currentUser.uid).push().key;
+        this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + "/" + newCategoryId).update(newCategory);
 
+        const newState = {
+            ...this.state.categories,
+            [newCategoryId]: newCategory
+        }
+        this.setState({categories: newState,
+        showCreateNewCategoryForm: false})
     }
     
     render() {
@@ -51,12 +62,10 @@ class CategoriesControl extends React.Component {
                             )
                         })
                     }
-                    <Button variant="info" type="button" onClick={() => this.setState({showCreateNewCategoryForm: true})}>Add a new category</Button>
-                    {this.state.showCreateNewCategoryForm ? 
-                        <NewCategory onNewCategoryCreation={this.handleNewCategoryCreation} />
-                        : null
-                    }
+                    <Link to='/categories/new'><Button variant="info" type="button" onClick={() => this.setState({showCreateNewCategoryForm: true})}>Add a new category</Button></Link>
                 </div>
+                <Route path="/categories/new" render={() => <NewCategory onNewCategoryCreation={this.handleNewCategoryCreation} />}/>
+                
             </div>
         );
     }
