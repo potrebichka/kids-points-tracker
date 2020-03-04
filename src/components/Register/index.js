@@ -88,8 +88,6 @@ class RegisterForm extends React.Component {
                 <Modal.Footer>
                     <Button variant="default" onClick={this.props.onCloseRegister}>Close</Button>
                     <Button variant="primary" type="submit" disabled={isInvalid}>Register</Button>
-                    {/* <Button variant="default" onClick={handleCloseRegister}>Close</Button>
-                    <Button variant="primary" type="submit" onClick={handleCloseRegister}>Register</Button> */}
                 </Modal.Footer>
             </Form>
         );

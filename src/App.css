@@ -380,3 +380,15 @@ button.btn-floating {
 .home p {
   font-size: 20px
 }
+
+.children {
+  text-align: center;
+}
+
+.children button {
+  font-size: 20px;
+}
+
+.children p {
+  font-size: 20px;
+}

@@ -1,6 +1,5 @@
 import React from 'react';
-import {Link, Route} from 'react-router-dom';
-import { v4 } from 'uuid';
+import {Link, Route, Redirect} from 'react-router-dom';
 import Child from './Child';
 import NewChild from './NewChild';
 
@@ -63,18 +62,20 @@ class ChildrenControl extends React.Component {
     }
 
     render() {
-        console.log(this.props.firebase)
+        if (!this.props.auth) {
+            return <Redirect to="/"/>
+        }
         return (
             <div className="children">
                 {this.state.onNewChildCreation ? null :
                     <div>
-                        <h2>Children:</h2>
-                        
-                        {this.state.children.length === 0 ? 
-                            <p>No children have been added</p> 
+                        <h1>Children:</h1>
+                        <hr/>
+                        {Object.keys(this.state.children).length === 0 ? 
+                            <div><p>No children have been added!</p> <hr/></div>
                             :
                             Object.keys(this.state.children).map(childId =>{
-                                return <Child id={childId} name={this.state.children[childId].name} birthday={this.state.children[childId].birthday} onChildEditing={this.handleChildEditing} key={childId} onDeleteClick={() => {this.handleChildDeletion(childId)}}/>
+                                return <div><Child id={childId} name={this.state.children[childId].name} birthday={this.state.children[childId].birthday} onChildEditing={this.handleChildEditing} key={childId} onDeleteClick={() => {this.handleChildDeletion(childId)}}/></div>
                             })
                         }
                         <Link to='/children/new'><button type="button" className="btn btn-info" onClick={this.handleClick}>Add a new child</button></Link>

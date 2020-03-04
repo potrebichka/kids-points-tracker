@@ -33,6 +33,10 @@ class Child extends React.Component {
         })
     }
 
+    handleShowEditFormClose = () => {
+        this.setState({showEditForm: false});
+    }
+
     render() {
         let yearDifference = Moment(new Date()).diff(Moment(this.props.birthday), 'years');
         const name = this.state.showInfo ? "Hide Info" : "Show Info";
@@ -40,6 +44,7 @@ class Child extends React.Component {
             <div>
                 <h3>{this.props.name}</h3>
                 <button type="button" className="btn btn-primary" onClick={this.handleShowInfoClick}>{name}</button>
+                <hr/>
                 {this.state.showInfo ? 
                     <div>
                         <h2>Child information</h2>
@@ -49,11 +54,12 @@ class Child extends React.Component {
                         <p>Points: {this.state.points}</p>
                         <button type="button" className="btn btn-success" onClick={this.handleShowEditFormClick}>Edit Child</button>
                         <button type="button" className="btn btn-danger" onClick={this.props.onDeleteClick}>Delete Child</button>
+                        <hr/>
                     </div>
                     : null
                 }
                 {this.state.showEditForm ? 
-                    <EditChild id={this.props.id} name={this.props.name} birthday={this.props.birthday} onChildEditing={this.handleChildEditing}/>
+                    <EditChild id={this.props.id} name={this.props.name} birthday={this.props.birthday} onChildEditing={this.handleChildEditing} onHide={this.handleShowEditFormClose}/>
                 : null
                 }
             </div>

@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
+import {Modal, Form, Button} from 'react-bootstrap';
 
 class NewChild extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {toList: false}
+        this.state = {toList: false, close: false}
         this._name = null;
         this._birthday = null;
+        
     }
 
     handleNewChildFormSubmission = (event)  => {
@@ -18,38 +20,46 @@ class NewChild extends React.Component {
         this.setState({toList: true})
     }
 
+    handleClose = () => {
+        this.setState({close: true});
+    }
+
     render() 
     {
-        if (this.state.toList) {
+        if (this.state.toList || this.state.close) {
             return <Redirect to="/children"/>
         } 
         return (
-            <div>
-                <form onSubmit={this.handleNewChildFormSubmission}>
-                    <h2>New Child</h2>
-                    <label>Enter a name:
-                        <input
-                            type="text"
-                            id="name"
-                            className="form-control"
-                            placeholder="Name of child" 
-                            ref={(input) => {this._name = input;}}
-                        />
-                    </label>
-                    <br/>
-                    <label>Enter birthday
-                        <input
-                            type="date"
-                            id="birthday"
-                            className="form-control"
-                            ref={(input) => {this._birthday = input;}}
-                        /> 
-                    </label>
-                    <br/>
-
-                    <button type="submit" className="btn btn-info">Add</button>
-                </form>
-        </div>
+            <Modal show onHide={this.handleClose}>
+                <Form onSubmit={this.handleNewChildFormSubmission}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>New Child</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form.Group>
+                            <Form.Label className="control-label">Enter a name:</Form.Label>
+                            <Form.Control 
+                                type="text"
+                                id="name"
+                                placeholder="Name of child" 
+                                ref={(input) => {this._name = input;}}>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label className="control-label">Enter birthday:</Form.Label>
+                            <Form.Control
+                                type="date"
+                                id="birthday"
+                                className="form-control"
+                                ref={(input) => {this._birthday = input;}}>
+                            </Form.Control>
+                        </Form.Group>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="info" type="submit">Add</Button>
+                    </Modal.Footer>
+                </Form>
+            </Modal>
         );
     }
 }
