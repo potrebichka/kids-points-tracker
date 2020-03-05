@@ -1,6 +1,7 @@
 import React from 'react';
 import ItemControl from './ItemControl';
 import {Redirect} from 'react-router-dom';
+import {Button} from 'react-bootstrap';
 
 class Category extends React.Component {
     constructor(props) {
@@ -44,6 +45,7 @@ class Category extends React.Component {
                         );
                     })
                 }
+                <Button></Button>
             </div>
         );
     }
