@@ -15,7 +15,6 @@ class Category extends React.Component {
         if (this.props.auth) {
             this.props.firebase.dbRef.ref("/categories/" + this.props.firebase.auth.currentUser.uid + "/" + this.props.id).once("value")
                 .then(snapshot => {
-                    console.log(snapshot.val());
                     const name = snapshot.val().name;
                     const newItemsList = snapshot.val().items ? snapshot.val().items : {};
                     this.setState({name: name, items: newItemsList, id: this.props.id})
@@ -35,6 +34,14 @@ class Category extends React.Component {
             [newItemId]: newItem
         }
         this.setState({items: newState, showCreateNewItemForm: false})
+    }
+
+    handleItemEdition = (updatedItem) => {
+        const updatedItemsState= {...this.state.items, [updatedItem.id]: updatedItem};
+        this.setState({items: updatedItemsState});
+        const id = updatedItem.id;
+        delete updatedItem.id;
+        this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + "/" + this.state.id + '/items/' + id).update(updatedItem);
     }
 
     render() {
@@ -57,6 +64,7 @@ class Category extends React.Component {
                                 name={this.state.items[itemId].name} 
                                 points={this.state.items[itemId].points} 
                                 key={itemId}
+                                onItemEdition={this.handleItemEdition}
                                 />
                         );
                     })
