@@ -33,7 +33,7 @@ class Child extends React.Component {
         })
     }
 
-    handleShowEditFormClose = () => {
+    handleHideEditForm = () => {
         this.setState({showEditForm: false});
     }
 
@@ -59,7 +59,7 @@ class Child extends React.Component {
                     : null
                 }
                 {this.state.showEditForm ? 
-                    <EditChild id={this.props.id} name={this.props.name} birthday={this.props.birthday} onChildEditing={this.handleChildEditing} onHide={this.handleShowEditFormClose}/>
+                    <EditChild id={this.props.id} name={this.props.name} birthday={this.props.birthday} onChildEditing={this.handleChildEditing} onHide={this.handleHideEditForm}/>
                 : null
                 }
             </div>

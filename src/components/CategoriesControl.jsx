@@ -34,6 +34,7 @@ class CategoriesControl extends React.Component {
 
     handleNewCategoryCreation = (newCategory) => {
         var newCategoryId = this.props.firebase.dbRef.ref('categories/' +  this.props.firebase.auth.currentUser.uid).push().key;
+        newCategory.item = {};
         this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + "/" + newCategoryId).update(newCategory);
 
         const newState = {
@@ -42,6 +43,18 @@ class CategoriesControl extends React.Component {
         }
         this.setState({categories: newState,
         showCreateNewCategoryForm: false})
+    }
+
+    handleCategoryEdition = (updatedCategory) => {
+        const updatedCategoryState= {...this.state.categories, [updatedCategory.id]: updatedCategory};
+        this.setState({categories: updatedCategoryState});
+        const id = updatedCategory.id;
+        delete updatedCategory.id;
+        this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + "/" + id).update(updatedCategory);
+    }
+
+    handleCategoryDeletion = () => {
+
     }
     
     render() {
@@ -58,7 +71,7 @@ class CategoriesControl extends React.Component {
                         :
                         Object.keys(this.state.categories).map(categoryId => {
                             return (
-                                <CategoryControl id={categoryId} name={this.state.categories[categoryId].name} items={this.state.categories[categoryId].items} key={categoryId} />
+                                <CategoryControl id={categoryId} name={this.state.categories[categoryId].name} items={this.state.categories[categoryId].items} key={categoryId} onCategoryEdition={this.handleCategoryEdition} onCategoryDelete={() => {this.handleCategoryDeletion(categoryId)}}/>
                             )
                         })
                     }
