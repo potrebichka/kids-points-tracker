@@ -22,6 +22,21 @@ class Category extends React.Component {
                 })
         }
     }
+
+    handleNewItemCreation = (newItem) => {
+        if (Object.keys(this.state.items).length == 0) {
+            this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + "/" + this.state.id).update({items: {}});
+        }
+        var newItemId = this.props.firebase.dbRef.ref('/categories/' +  this.props.firebase.auth.currentUser.uid + "/" + this.state.id + "/items/").push().key;
+        this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + "/" + this.state.id + "/items/" + newItemId).update(newItem);
+
+        const newState = {
+            ...this.state.items,
+            [newItemId]: newItem
+        }
+        this.setState({items: newState, showCreateNewItemForm: false})
+    }
+
     render() {
         if (!this.props.auth) {
             return <Redirect to="/"/>
@@ -48,7 +63,7 @@ class Category extends React.Component {
                 }
                 <Button variant="info" type="button" onClick={() => this.setState({showCreateNewItemForm: true})}>Add a new Item</Button>
                 {this.state.showCreateNewItemForm ?
-                <NewItem onHide={() => this.setState({showCreateNewItemForm: false})}/>
+                <NewItem onHide={() => this.setState({showCreateNewItemForm: false})} onNewItemCreation={this.handleNewItemCreation}/>
                 : null
                 }
             </div>

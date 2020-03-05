@@ -11,7 +11,7 @@ const NewItem = (props) => {
 
     const handleNewItemFormSubmission = (event)  => {
         event.preventDefault();
-        props.onNewItemCreation({name: _name.value, points: _points.value});
+        props.onNewItemCreation({name: _name.value, points: parseInt(_points.value)});
         _name.value = '';
         _points.value = '';
         props.onHide();
@@ -53,7 +53,8 @@ const NewItem = (props) => {
 }
 
 NewItem.propTypes = {
-    onNewItemCreation: PropTypes.func
+    onNewItemCreation: PropTypes.func,
+    onHide: PropTypes.func
 }
 
 export default NewItem;

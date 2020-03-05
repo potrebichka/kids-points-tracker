@@ -34,7 +34,6 @@ class CategoriesControl extends React.Component {
     handleNewCategoryCreation = (newCategory) => {
         var newCategoryId = this.props.firebase.dbRef.ref('categories/' +  this.props.firebase.auth.currentUser.uid).push().key;
         newCategory.items = {};
-        console.log(newCategory)
         this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + "/" + newCategoryId).update(newCategory);
 
         const newState = {
