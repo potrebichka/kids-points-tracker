@@ -21,6 +21,11 @@ const ItemControl = (props) => {
         handleHideEditForm();
     }
 
+    const handleItemDeletion = () => {
+        props.onItemDeletion();
+        handleHideDeleteForm();
+    }
+
     return (
         <div>
             <h3>Item Name: {props.name}</h3>
@@ -33,7 +38,7 @@ const ItemControl = (props) => {
                 : null
             }
             {showDelete ? 
-                <DeleteItemConfirmation onHide={handleHideDeleteForm} name={props.name}/>
+                <DeleteItemConfirmation onHide={handleHideDeleteForm} name={props.name} onItemDeletion={handleItemDeletion}/>
                 : null
             }
         </div>
@@ -43,7 +48,8 @@ const ItemControl = (props) => {
 ItemControl.propTypes = {
     name: PropTypes.string,
     points: PropTypes.number,
-    onItemEdition: PropTypes.func
+    onItemEdition: PropTypes.func,
+    onItemDeletion: PropTypes.func
 }
 
 export default ItemControl;

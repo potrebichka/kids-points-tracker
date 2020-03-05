@@ -31,6 +31,7 @@ const EditCategory = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="success" type="submit">Edit</Button>
+                    <Button variant="primary" type="button" onClick={props.onHide}>Close</Button>
                 </Modal.Footer>
             </Form>
         </Modal>

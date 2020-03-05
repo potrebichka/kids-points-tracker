@@ -44,6 +44,14 @@ class Category extends React.Component {
         this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + "/" + this.state.id + '/items/' + id).update(updatedItem);
     }
 
+    handleItemDeletion = (id) => {
+        let copyState = {...this.state.items};
+        delete copyState[id];
+        this.setState({items: copyState});
+
+        this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + '/' + this.state.id + '/items/' + id).remove();
+    }
+
     render() {
         if (!this.props.auth) {
             return <Redirect to="/"/>
@@ -65,13 +73,14 @@ class Category extends React.Component {
                                 points={this.state.items[itemId].points} 
                                 key={itemId}
                                 onItemEdition={this.handleItemEdition}
+                                onItemDeletion={() => this.handleItemDeletion(itemId)}
                                 />
                         );
                     })
                 }
                 <Button variant="info" type="button" onClick={() => this.setState({showCreateNewItemForm: true})}>Add a new Item</Button>
                 {this.state.showCreateNewItemForm ?
-                <NewItem onHide={() => this.setState({showCreateNewItemForm: false})} onNewItemCreation={this.handleNewItemCreation}/>
+                <NewItem onHide={() => this.setState({showCreateNewItemForm: false})} onNewItemCreation={this.handleNewItemCreation} />
                 : null
                 }
             </div>

@@ -43,6 +43,7 @@ const EditItem = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="success" type="submit">Edit</Button>
+                    <Button variant="danger" type="button" onClick={props.onHide}>Close</Button>
                 </Modal.Footer>
             </Form>
         </Modal>
