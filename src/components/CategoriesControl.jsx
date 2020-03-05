@@ -53,8 +53,12 @@ class CategoriesControl extends React.Component {
         this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + "/" + id).update(updatedCategory);
     }
 
-    handleCategoryDeletion = () => {
+    handleCategoryDeletion = (id) => {
+        let copyState = {...this.state.categories};
+        delete copyState[id];
+        this.setState({categories: copyState});
 
+        this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + '/' + id).remove();
     }
     
     render() {
@@ -71,7 +75,7 @@ class CategoriesControl extends React.Component {
                         :
                         Object.keys(this.state.categories).map(categoryId => {
                             return (
-                                <CategoryControl id={categoryId} name={this.state.categories[categoryId].name} items={this.state.categories[categoryId].items} key={categoryId} onCategoryEdition={this.handleCategoryEdition} onCategoryDelete={() => {this.handleCategoryDeletion(categoryId)}}/>
+                                <CategoryControl id={categoryId} name={this.state.categories[categoryId].name} items={this.state.categories[categoryId].items} key={categoryId} onCategoryEdition={this.handleCategoryEdition} onCategoryDeletion={() => {this.handleCategoryDeletion(categoryId)}}/>
                             )
                         })
                     }
