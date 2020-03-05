@@ -1,8 +1,8 @@
 import React from 'react';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
-import EditChild from './EditChild';
-import DeleteChildConfirmation from './DeleteChildConfirmation';
+import EditChild from './Children/EditChild';
+import DeleteChildConfirmation from './Children/DeleteChildConfirmation';
 
 class Child extends React.Component {
     constructor(props) {

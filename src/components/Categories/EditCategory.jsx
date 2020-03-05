@@ -1,24 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Modal, Form, Button} from 'react-bootstrap';
-import {Redirect} from 'react-router-dom';
 
-const EditChild = (props) => {
+const EditCategory = (props) => {
     let _name = null;
-    let _birthday = null;
 
-    function handleEditChildFormSubmission (event) {
+    function handleEditCategoryFormSubmission (event) {
         event.preventDefault();
-        props.onChildEditing({name: _name.value, birthday: _birthday.value});
+        props.onCategoryEdition({name: _name.value});
         _name.value = '';
-        _birthday.value = null;
     }
 
     return (
         <Modal show onHide={props.onHide}>
-            <Form onSubmit={handleEditChildFormSubmission}>
+            <Form onSubmit={handleEditCategoryFormSubmission}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit Child</Modal.Title>
+                    <Modal.Title>Edit Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Group>
@@ -31,15 +28,6 @@ const EditChild = (props) => {
                             ref={(input) => {_name = input;}}>
                         </Form.Control>
                     </Form.Group>
-                    <Form.Group>
-                        <Form.Label className="control-label">Enter birthday</Form.Label>
-                        <Form.Control
-                            type="date"
-                            id="birthday"
-                            defaultValue={props.birthday}
-                            ref={(input) => {_birthday = input;}}>
-                        </Form.Control>
-                    </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="success" type="submit">Edit</Button>
@@ -49,11 +37,11 @@ const EditChild = (props) => {
     );
 }
 
-EditChild.propTypes = {
+EditCategory.propTypes = {
     name: PropTypes.string,
     birthday: PropTypes.string,
-    onChildEditing: PropTypes.func,
+    onCategoryEdition: PropTypes.func,
     onHide: PropTypes.func
 }
 
-export default EditChild;
+export default EditCategory;

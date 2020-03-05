@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, Button, Form} from 'react-bootstrap';
+import {Modal, Button} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 const DeleteChildConfirmation = (props) => {

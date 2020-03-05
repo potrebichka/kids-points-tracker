@@ -3,8 +3,8 @@ import './App.css';
 import Header from './components/Header';
 import {Switch, Route} from 'react-router-dom';
 import Home from './components/Home';
-import ChildrenControl from './components/ChildrenControl';
-import CategoriesControl from './components/CategoriesControl.jsx';
+import ChildrenControl from './components/Children/ChildrenControl';
+import CategoriesControl from './components/Categories/CategoriesControl.jsx';
 import Error404 from './components/Error404';
 import {FirebaseContext} from './components/Firebase';
 

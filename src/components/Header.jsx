@@ -2,7 +2,7 @@ import React, {useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import PropTypes from 'prop-types';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal} from 'react-bootstrap';
 import RegisterPage from './Register';
 import LoginPage from './Login';
 import SignOut from './SignOut';

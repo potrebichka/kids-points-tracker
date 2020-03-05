@@ -20,9 +20,6 @@ class Firebase {
         this.dbRef = app.database();
         this.childrenRef = this.dbRef.ref('children');
         this.usersRef = this.dbRef.ref('users');       
-        // this.childrenRef.push({[this.auth.currentUser.uid]: {
-        //     name: 'kirill', birthday: "01/20/2020"}
-        //     })
     }
 
     //* Auth API */
