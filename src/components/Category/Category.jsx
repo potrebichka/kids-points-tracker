@@ -2,11 +2,12 @@ import React from 'react';
 import ItemControl from './ItemControl';
 import {Redirect} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
+import NewItem from './NewItem';
 
 class Category extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {name: "", items: {}, id: null}
+        this.state = {name: "", items: {}, id: null, showCreateNewItemForm: false}
     }
     
 
@@ -45,7 +46,11 @@ class Category extends React.Component {
                         );
                     })
                 }
-                <Button></Button>
+                <Button variant="info" type="button" onClick={this.state.showCreateNewItemForm}>Add a new Item</Button>
+                {this.state.showCreateNewItemForm ?
+                <NewItem />
+                : null
+                }
             </div>
         );
     }
