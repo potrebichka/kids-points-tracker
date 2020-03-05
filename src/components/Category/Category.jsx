@@ -46,9 +46,9 @@ class Category extends React.Component {
                         );
                     })
                 }
-                <Button variant="info" type="button" onClick={this.state.showCreateNewItemForm}>Add a new Item</Button>
+                <Button variant="info" type="button" onClick={() => this.setState({showCreateNewItemForm: true})}>Add a new Item</Button>
                 {this.state.showCreateNewItemForm ?
-                <NewItem />
+                <NewItem onHide={() => this.setState({showCreateNewItemForm: false})}/>
                 : null
                 }
             </div>
