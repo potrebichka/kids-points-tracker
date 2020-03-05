@@ -25,9 +25,11 @@ class Category extends React.Component {
             return <Redirect to="/"/>
         }
         return (
-            <div>
-                <h2>Category name: {this.state.name}</h2>
+            <div className="category">
+                <h2>Category Name: {this.state.name}</h2>
+                <hr/>
                 <h3>Items in category:</h3>
+                <hr/>
                 {Object.keys(this.state.items).length === 0 ?
                     <h3>No items have been added to Category!</h3>
                     :
