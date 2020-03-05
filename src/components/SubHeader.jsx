@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 class SubHeader extends React.Component {
     constructor(props) {
@@ -24,8 +25,8 @@ class SubHeader extends React.Component {
             <div className="subheader">
                 {this.state.childrenList.map((item,idx) => {
                     const color = this.palette[idx%this.palette.length];
-                    console.log(color)
-                    return <Button type="button" key={item.id} style={{backgroundColor: color}}>{item.name}</Button>
+                    const link = "/children/" + item.id 
+                    return <Link to={link} ><Button type="button" key={item.id} style={{backgroundColor: color}}>{item.name}</Button></Link>
                 })}
             </div>
         );
