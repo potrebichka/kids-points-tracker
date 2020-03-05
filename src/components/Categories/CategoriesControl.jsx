@@ -9,7 +9,7 @@ class CategoriesControl extends React.Component {
         super(props);
         this.state = {
             categories: {},
-            showCreateNewCategoryForm: false
+            showCreateNewCategoryForm: false,
         }
     }
     
@@ -17,7 +17,6 @@ class CategoriesControl extends React.Component {
         if (this.props.auth) {
             this.props.firebase.dbRef.ref("/categories/" + this.props.firebase.auth.currentUser.uid).once("value")
                 .then(snapshot => {
-                    console.log(snapshot.val());
                     let newCategoriesList = {...this.state.categories};
                     for (let key in snapshot.val()) {
                         newCategoriesList = {
@@ -34,7 +33,8 @@ class CategoriesControl extends React.Component {
 
     handleNewCategoryCreation = (newCategory) => {
         var newCategoryId = this.props.firebase.dbRef.ref('categories/' +  this.props.firebase.auth.currentUser.uid).push().key;
-        newCategory.item = {};
+        newCategory.items = {};
+        console.log(newCategory)
         this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + "/" + newCategoryId).update(newCategory);
 
         const newState = {
@@ -79,10 +79,12 @@ class CategoriesControl extends React.Component {
                             )
                         })
                     }
-                    <Link to='/categories/new'><Button variant="info" type="button" onClick={() => this.setState({showCreateNewCategoryForm: true})}>Add a new category</Button></Link>
+                   <Button variant="info" type="button" onClick={() => this.setState({showCreateNewCategoryForm: true})}>Add a new category</Button>
+                    {this.state.showCreateNewCategoryForm ?
+                        <NewCategory onNewCategoryCreation={this.handleNewCategoryCreation} onHide={() => this.setState({showCreateNewCategoryForm: false})}/>
+                        : null
+                    }
                 </div>
-                <Route path="/categories/new" render={() => <NewCategory onNewCategoryCreation={this.handleNewCategoryCreation} />}/>
-                
             </div>
         );
     }

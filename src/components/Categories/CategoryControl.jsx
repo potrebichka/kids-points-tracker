@@ -3,6 +3,7 @@ import {Button} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import EditCategory from './EditCategory';
 import DeleteCategoryConfirmation from './DeleteCategoryConfirmation';
+import {Link} from 'react-router-dom';
 
 class CategoryControl extends React.Component {
     constructor(props) {
@@ -45,7 +46,12 @@ class CategoryControl extends React.Component {
     render() {
         return (
             <div>
-                <h2>{this.props.name}</h2>
+                <h2><Link to={{
+                    pathname: "/categories/" + this.props.id, 
+                    state: {
+                        name: this.props.name
+                    }
+                    }}>{this.props.name}</Link></h2>
                 <Button type="button" variant="success" onClick={this.handleShowEditFormClick}>Edit Category</Button>
                 <Button type="button" variant="danger" onClick={this.handleShowDeleteForm}>Delete category</Button>
                 <hr/>
