@@ -56,7 +56,7 @@ const Header = (props) => {
                             <span className="user-name"></span>
                         </span>
                         <Link to="/"><button type="button" className="btn btn-secondary">Home</button></Link>
-                        <Link to="/children"><Button variant="success">Your Children</Button></Link>
+                        <Link to="/children"><Button variant="success" onClick={props.onChildrenClick}>Your Children</Button></Link>
                         <Link to="/categories"><Button variant="info">Your Categories</Button></Link>
                         <SignOut onAuthChange={handleAuthChange}/>
                     </div>
@@ -90,7 +90,8 @@ const Header = (props) => {
 
 Header.propTypes = {
     auth: PropTypes.bool,
-    onAuthStatusChange: PropTypes.func
+    onAuthStatusChange: PropTypes.func,
+    onChildrenClick: PropTypes.func
 }
 
 export default Header;

@@ -14,20 +14,20 @@ class ChildrenControl extends React.Component {
 
     componentDidMount() {
         if (this.props.auth) {
-        this.props.firebase.dbRef.ref("children/" + this.props.firebase.auth.currentUser.uid).once("value")
-            .then(snapshot => 
-                {
-                    let newChildrenList = {...this.state.children}
-                    for (let key in snapshot.val()) {
-                        newChildrenList = {
-                            ...newChildrenList, 
-                            [key] : 
-                                {name: snapshot.val()[key].name, 
-                                birthday: snapshot.val()[key].birthday}};
-                    }
-                    this.setState({children: newChildrenList});
-            })
-         }
+            this.props.firebase.dbRef.ref("children/" + this.props.firebase.auth.currentUser.uid).once("value")
+                .then(snapshot => 
+                    {
+                        let newChildrenList = {...this.state.children}
+                        for (let key in snapshot.val()) {
+                            newChildrenList = {
+                                ...newChildrenList, 
+                                [key] : 
+                                    {name: snapshot.val()[key].name, 
+                                    birthday: snapshot.val()[key].birthday}};
+                        }
+                        this.setState({children: newChildrenList});
+                })
+            }
     }
 
     handleNewChildCreation = (newChild) => {
