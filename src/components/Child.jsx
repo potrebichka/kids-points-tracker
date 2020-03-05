@@ -2,6 +2,7 @@ import React from 'react';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
 import EditChild from './EditChild';
+import DeleteChildConfirmation from './DeleteChildConfirmation';
 
 class Child extends React.Component {
     constructor(props) {
@@ -9,7 +10,8 @@ class Child extends React.Component {
         this.state = {
             points: 0,
             showInfo: false,
-            showEditForm: false
+            showEditForm: false,
+            showDeleteForm: false
         }
     }
 
@@ -37,6 +39,12 @@ class Child extends React.Component {
         this.setState({showEditForm: false});
     }
 
+    handleChildDeletion = () => {
+        this.setState({showDeleteForm: false});
+        this.props.onDeleteClick();
+    }
+
+
     render() {
         let yearDifference = Moment(new Date()).diff(Moment(this.props.birthday), 'years');
         const name = this.state.showInfo ? "Hide Info" : "Show Info";
@@ -53,7 +61,7 @@ class Child extends React.Component {
                         <p>Your child is {yearDifference} years old.</p>
                         <p>Points: {this.state.points}</p>
                         <button type="button" className="btn btn-success" onClick={this.handleShowEditFormClick}>Edit Child</button>
-                        <button type="button" className="btn btn-danger" onClick={this.props.onDeleteClick}>Delete Child</button>
+                        <button type="button" className="btn btn-danger"  onClick={() => this.setState({showDeleteForm: true})}>Delete Child</button>
                         <hr/>
                     </div>
                     : null
@@ -61,6 +69,10 @@ class Child extends React.Component {
                 {this.state.showEditForm ? 
                     <EditChild id={this.props.id} name={this.props.name} birthday={this.props.birthday} onChildEditing={this.handleChildEditing} onHide={this.handleHideEditForm}/>
                 : null
+                }
+                {this.state.showDeleteForm ? 
+                    <DeleteChildConfirmation onChildDeletion={this.handleChildDeletion} onHide={() => this.setState({showDeleteForm: false})} name={this.props.name}/>
+                    : null
                 }
             </div>
         );
