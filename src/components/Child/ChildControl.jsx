@@ -28,13 +28,13 @@ class ChildControl extends React.Component {
         if (this.props.auth) {
             this.props.firebase.dbRef.ref("children/" + this.props.firebase.auth.currentUser.uid + "/" + this.props.id).once("value")
                 .then(snapshot => 
-                    {
-                        this.setState({
-                            name: snapshot.val().name, 
-                            birthday: snapshot.val().birthday, 
-                            points: snapshot.val().points ? this.state.points : 0,
-                            history: snapshot.val().history ? snapshot.val().history : []
-                        });
+                {
+                    this.setState({
+                        name: snapshot.val().name, 
+                        birthday: snapshot.val().birthday, 
+                        points: snapshot.val().points ? this.state.points : 0,
+                        history: snapshot.val().history ? snapshot.val().history : []
+                    });
                 })
             .then(() => {
                 this.props.firebase.dbRef.ref("categories/" + this.props.firebase.auth.currentUser.uid + "/").once("value")
@@ -54,19 +54,27 @@ class ChildControl extends React.Component {
 
     handleRedeemPoints = event => {
         event.preventDefault();
+        const newPoints = this.state.points + parseInt(this._item.value.points) * parseInt(this._quantity.value);
+
+        this.props.firebase.dbRef.ref('/children/' + this.props.firebase.auth.currentUser.uid + "/" + this.props.id ).update({points: newPoints});
+        this.props.firebase.dbRef.ref('/children/' + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/history/" + new Moment() + "/").update( [this._category.value, this._item.value.name, this._quantity.value, parseInt(this._item.value.points) * parseInt(this._quantity.value)]);
+
+
         let history = {
             ...this.state.history, 
             [new Moment()]:  
                 [this._category.value, this._item.value.name, this._quantity.value, parseInt(this._item.value.points) * parseInt(this._quantity.value)]
         };
+
         this.setState({
-            points: this.state.points + parseInt(this._item.value.points) * parseInt(this._quantity.value), 
+            points: newPoints, 
             history: history, 
             showCategories: false, 
             showItems: false,
             showQuantity: false,
             showRedeemButton: false
-        })
+        });
+
     }
 
     handleRedeemPointsButtonClick = () => {
@@ -149,21 +157,26 @@ class ChildControl extends React.Component {
                 <hr/>
                 {this.state.showHistory ? 
                     <table>
-                        <tr>
-                            <th>Date</th>
-                            <th>Category</th>
-                            <th>Item</th>
-                            <th>Quantity</th>
-                            <th>Points</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Points</th>
+                            </tr>
+                            
+                        </thead>
                     {Object.keys(this.state.history).map(id => {
-                        return <tr key={id} className="history-item">
-                            <th>{Moment(id).format('L')}</th> 
-                            <th>{this.state.history[id][0]}</th>
-                            <th>{this.state.history[id][1]}</th>
-                            <th>{this.state.history[id][2]}</th>
-                            <th>{this.state.history[id][3]}</th>
-                        </tr>
+                        return <tbody key={id} className="history-item">
+                            <tr>
+                                <td>{Moment(id).format('LLL')}</td> 
+                                <td>{this.state.history[id][0]}</td>
+                                <td>{this.state.history[id][1]}</td>
+                                <td>{this.state.history[id][2]}</td>
+                                <td>{this.state.history[id][3]}</td>
+                            </tr>
+                        </tbody>
                     })}
                     </table>
                 :null}
