@@ -26,7 +26,7 @@ class SubHeader extends React.Component {
                 {this.state.childrenList.map((item,idx) => {
                     const color = this.palette[idx%this.palette.length];
                     const link = "/children/" + item.id 
-                    return <Link to={link} ><Button type="button" key={item.id} style={{backgroundColor: color}}>{item.name}</Button></Link>
+                    return <Link to={link} key={item.id} ><Button type="button" style={{backgroundColor: color}}>{item.name}</Button></Link>
                 })}
             </div>
         );

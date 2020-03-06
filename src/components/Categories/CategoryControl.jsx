@@ -49,7 +49,8 @@ class CategoryControl extends React.Component {
                 <h2><Link to={{
                     pathname: "/categories/" + this.props.id, 
                     state: {
-                        name: this.props.name
+                        name: this.props.name,
+                        items: this.props.items
                     }
                     }}>{this.props.name}</Link></h2>
                 <Button type="button" variant="success" onClick={this.handleShowEditFormClick}>Edit Category</Button>
