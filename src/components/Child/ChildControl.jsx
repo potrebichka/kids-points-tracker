@@ -2,6 +2,7 @@ import React from 'react';
 import {Redirect} from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import Select from 'react-select';
+import Moment from 'moment';
 
 class ChildControl extends React.Component {
     constructor(props) {
@@ -53,7 +54,7 @@ class ChildControl extends React.Component {
 
     handleRedeemPoints = event => {
         event.preventDefault();
-        let history = {...this.state.history, [new Date()]: this._category.value + " / " + this._item.value.name + " / " + this._quantity.value + " / " + this._item.value.points};
+        let history = {...this.state.history, [new Moment()]: this._category.value + " / " + this._item.value.name + " / " + this._quantity.value + " / " + parseInt(this._item.value.points) * parseInt(this._quantity.value)};
         this.setState({
             points: this.state.points + parseInt(this._item.value.points) * parseInt(this._quantity.value), 
             history: history, 
@@ -126,7 +127,8 @@ class ChildControl extends React.Component {
                 {this.state.showQuantity ? 
                     <Form.Group>
                         <Form.Label className="control-label">Quantity:</Form.Label>
-                        <Form.Control 
+                        <br/>
+                        <input 
                             type="number" 
                             name="quantity" 
                             className="select"
@@ -138,6 +140,14 @@ class ChildControl extends React.Component {
                     <Button type="info" type="submit">Redeem</Button>
                 :null}
                 </Form>
+                <hr/>
+                <Button variant="secondary" type="button" onClick={() => this.setState({showHistory: !this.state.showHistory})}>Show History</Button>
+                <hr/>
+                {this.state.showHistory ? 
+                    Object.keys(this.state.history).map(id => {
+                        return <p key={id} className="history-item">{Moment(id).format('L') + ":   " +  this.state.history[id]}</p>
+                    })
+                :null}
             </div>
         );
     }

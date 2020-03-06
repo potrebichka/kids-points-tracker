@@ -436,3 +436,7 @@ button.btn-floating {
   margin-left: 20%;
   margin-right: 20%
 }
+
+.history-item {
+  font-size: 20px
+}
