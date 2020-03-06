@@ -430,3 +430,9 @@ button.btn-floating {
   margin-top: 10px;
   font-size: 40px;
 }
+
+.select {
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%
+}
