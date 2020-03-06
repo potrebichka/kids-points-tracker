@@ -75,7 +75,14 @@ class ChildrenControl extends React.Component {
                             <div><p>No children have been added!</p> <hr/></div>
                             :
                             Object.keys(this.state.children).map(childId =>{
-                                return <Child id={childId} name={this.state.children[childId].name} birthday={this.state.children[childId].birthday} onChildEditing={this.handleChildEditing} key={childId} onDeleteClick={() => {this.handleChildDeletion(childId)}}/>
+                                return <Child 
+                                        id={childId} 
+                                        name={this.state.children[childId].name} 
+                                        birthday={this.state.children[childId].birthday} 
+                                        points={this.state.children[childId].points}
+                                        onChildEdition={this.handleChildEditing} 
+                                        key={childId} 
+                                        onDeleteClick={() => {this.handleChildDeletion(childId)}}/>
                             })
                         }
                         <Link to='/children/new'><button type="button" className="btn btn-info" onClick={this.handleClick}>Add a new child</button></Link>

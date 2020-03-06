@@ -1,89 +1,75 @@
-import React from 'react';
+import React, {useState } from 'react';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
 import EditChild from './Children/EditChild';
 import DeleteChildConfirmation from './Children/DeleteChildConfirmation';
+import {Link} from 'react-router-dom';
 
-class Child extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            points: 0,
-            showInfo: false,
-            showEditForm: false,
-            showDeleteForm: false
-        }
+const Child = (props) => {
+
+    const [showInfo, setShowInfo] = useState(false);
+    const [showEditForm, setShowEditForm] = useState(false);
+    const [showDeleteForm, setShowDeleteForm] = useState(false);
+
+
+    const handleShowInfo = () => setShowInfo(true);
+
+    const handleShowEditForm = () => {setShowInfo(false); setShowEditForm(true);}
+
+    const handleChildEdition = (updatedChild) => {
+        updatedChild.id = props.id;
+        props.onChildEdition(updatedChild);
+
+        setShowInfo(true);
+        setShowEditForm(false);
     }
 
-    handleShowInfoClick = () => {
-        this.setState({showInfo: !this.state.showInfo});
-    }
+    const handleHideEditForm = () => setShowEditForm(false);
 
-    handleShowEditFormClick = () => {
-        this.setState({
-            showInfo: false,
-            showEditForm: true
-        })
-    }
-
-    handleChildEditing = (updatedChild) => {
-        updatedChild.id = this.props.id;
-        this.props.onChildEditing(updatedChild);
-        this.setState({
-            showInfo: true,
-            showEditForm: false
-        })
-    }
-
-    handleHideEditForm = () => {
-        this.setState({showEditForm: false});
-    }
-
-    handleChildDeletion = () => {
-        this.setState({showDeleteForm: false});
-        this.props.onDeleteClick();
+    const handleChildDeletion = () => {
+        setShowDeleteForm(false);
+        props.onDeleteClick();
     }
 
 
-    render() {
-        let yearDifference = Moment(new Date()).diff(Moment(this.props.birthday), 'years');
-        const name = this.state.showInfo ? "Hide Info" : "Show Info";
-        return (
-            <div>
-                <h3>{this.props.name}</h3>
-                <button type="button" className="btn btn-primary" onClick={this.handleShowInfoClick}>{name}</button>
-                <hr/>
-                {this.state.showInfo ? 
-                    <div>
-                        <h2>Child information</h2>
-                        <p>Name: {this.props.name}</p>
-                        <p>Birthday: {this.props.birthday}</p>
-                        <p>Your child is {yearDifference} years old.</p>
-                        <p>Points: {this.state.points}</p>
-                        <button type="button" className="btn btn-success" onClick={this.handleShowEditFormClick}>Edit Child</button>
-                        <button type="button" className="btn btn-danger"  onClick={() => this.setState({showDeleteForm: true})}>Delete Child</button>
-                        <hr/>
-                    </div>
-                    : null
-                }
-                {this.state.showEditForm ? 
-                    <EditChild id={this.props.id} name={this.props.name} birthday={this.props.birthday} onChildEditing={this.handleChildEditing} onHide={this.handleHideEditForm}/>
+    let yearDifference = Moment(new Date()).diff(Moment(props.birthday), 'years');
+    const name = showInfo ? "Hide Info" : "Show Info";
+    return (
+        <div>
+            <h3><Link to={"children/" + props.id}>{props.name}</Link> </h3>
+            <button type="button" className="btn btn-primary" onClick={handleShowInfo}>{name}</button>
+            <hr/>
+            {showInfo ? 
+                <div>
+                    <h2>Child information</h2>
+                    <p>Name: {props.name}</p>
+                    <p>Birthday: {props.birthday}</p>
+                    <p>Your child is {yearDifference} years old.</p>
+                    <p>Points: {props.points}</p>
+                    <button type="button" className="btn btn-success" onClick={handleShowEditForm}>Edit Child</button>
+                    <button type="button" className="btn btn-danger"  onClick={setShowDeleteForm(true)}>Delete Child</button>
+                    <hr/>
+                </div>
                 : null
-                }
-                {this.state.showDeleteForm ? 
-                    <DeleteChildConfirmation onChildDeletion={this.handleChildDeletion} onHide={() => this.setState({showDeleteForm: false})} name={this.props.name}/>
-                    : null
-                }
-            </div>
-        );
-    }
+            }
+            {showEditForm ? 
+                <EditChild id={props.id} name={props.name} birthday={props.birthday} onChildEdition={handleChildEdition} onHide={handleHideEditForm}/>
+            : null
+            }
+            {showDeleteForm ? 
+                <DeleteChildConfirmation onChildDeletion={handleChildDeletion} onHide={setShowDeleteForm(false)} name={props.name}/>
+                : null
+            }
+        </div>
+    );
+    
 }
 
 Child.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
     birthday: PropTypes.string,
-    onChildEditing: PropTypes.func,
+    onChildEdition: PropTypes.func,
     onDeleteClick: PropTypes.func
 }
 
