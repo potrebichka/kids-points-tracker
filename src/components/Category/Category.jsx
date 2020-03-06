@@ -13,12 +13,6 @@ class Category extends React.Component {
 
     componentDidMount() {
         if (this.props.auth) {
-            // this.props.firebase.dbRef.ref("/categories/" + this.props.firebase.auth.currentUser.uid + "/" + this.props.id).once("value")
-            //     .then(snapshot => {
-            //         const name = snapshot.val().name;
-            //         const newItemsList = snapshot.val().items ? snapshot.val().items : {};
-            //         this.setState({name: name, items: newItemsList, id: this.props.id})
-            //     })
             this.setState({id: this.props.id, name: this.props.name, items: this.props.items})
         }
     }
