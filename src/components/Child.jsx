@@ -12,7 +12,7 @@ const Child = (props) => {
     const [showDeleteForm, setShowDeleteForm] = useState(false);
 
 
-    const handleShowInfo = () => setShowInfo(true);
+    const handleShowInfo = () => setShowInfo(!showInfo);
 
     const handleShowEditForm = () => {setShowInfo(false); setShowEditForm(true);}
 
@@ -34,6 +34,7 @@ const Child = (props) => {
 
     let yearDifference = Moment(new Date()).diff(Moment(props.birthday), 'years');
     const name = showInfo ? "Hide Info" : "Show Info";
+
     return (
         <div>
             <h3><Link to={"children/" + props.id}>{props.name}</Link> </h3>
@@ -47,7 +48,7 @@ const Child = (props) => {
                     <p>Your child is {yearDifference} years old.</p>
                     <p>Points: {props.points}</p>
                     <button type="button" className="btn btn-success" onClick={handleShowEditForm}>Edit Child</button>
-                    <button type="button" className="btn btn-danger"  onClick={setShowDeleteForm(true)}>Delete Child</button>
+                    <button type="button" className="btn btn-danger"  onClick={() => setShowDeleteForm(true)}>Delete Child</button>
                     <hr/>
                 </div>
                 : null
@@ -57,7 +58,7 @@ const Child = (props) => {
             : null
             }
             {showDeleteForm ? 
-                <DeleteChildConfirmation onChildDeletion={handleChildDeletion} onHide={setShowDeleteForm(false)} name={props.name}/>
+                <DeleteChildConfirmation onChildDeletion={handleChildDeletion} onHide={() => setShowDeleteForm(false)} name={props.name}/>
                 : null
             }
         </div>
