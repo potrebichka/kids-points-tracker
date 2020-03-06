@@ -438,5 +438,17 @@ button.btn-floating {
 }
 
 .history-item {
-  font-size: 20px
+  font-size: 20px;
+}
+
+table {
+  margin: auto;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th {
+  padding: 5px
 }

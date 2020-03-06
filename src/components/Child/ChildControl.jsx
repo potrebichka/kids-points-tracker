@@ -54,7 +54,11 @@ class ChildControl extends React.Component {
 
     handleRedeemPoints = event => {
         event.preventDefault();
-        let history = {...this.state.history, [new Moment()]: this._category.value + " / " + this._item.value.name + " / " + this._quantity.value + " / " + parseInt(this._item.value.points) * parseInt(this._quantity.value)};
+        let history = {
+            ...this.state.history, 
+            [new Moment()]:  
+                [this._category.value, this._item.value.name, this._quantity.value, parseInt(this._item.value.points) * parseInt(this._quantity.value)]
+        };
         this.setState({
             points: this.state.points + parseInt(this._item.value.points) * parseInt(this._quantity.value), 
             history: history, 
@@ -144,9 +148,24 @@ class ChildControl extends React.Component {
                 <Button variant="secondary" type="button" onClick={() => this.setState({showHistory: !this.state.showHistory})}>Show History</Button>
                 <hr/>
                 {this.state.showHistory ? 
-                    Object.keys(this.state.history).map(id => {
-                        return <p key={id} className="history-item">{Moment(id).format('L') + ":   " +  this.state.history[id]}</p>
-                    })
+                    <table>
+                        <tr>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Points</th>
+                        </tr>
+                    {Object.keys(this.state.history).map(id => {
+                        return <tr key={id} className="history-item">
+                            <th>{Moment(id).format('L')}</th> 
+                            <th>{this.state.history[id][0]}</th>
+                            <th>{this.state.history[id][1]}</th>
+                            <th>{this.state.history[id][2]}</th>
+                            <th>{this.state.history[id][3]}</th>
+                        </tr>
+                    })}
+                    </table>
                 :null}
             </div>
         );
