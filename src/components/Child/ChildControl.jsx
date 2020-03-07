@@ -25,6 +25,10 @@ class ChildControl extends React.Component {
     }
 
     componentDidMount() {
+        this.updateState();
+    }
+
+    updateState() {
         if (this.props.auth) {
             this.props.firebase.dbRef.ref("children/" + this.props.firebase.auth.currentUser.uid + "/" + this.props.id).once("value")
                 .then(snapshot => 
@@ -51,6 +55,13 @@ class ChildControl extends React.Component {
             })
         }
     }
+
+    componentDidUpdate(prevProps) {
+        
+        if (this.props.id !== prevProps.id) {
+           this.updateState();
+        }
+      }
 
     handleRedeemPoints = event => {
         event.preventDefault();
@@ -93,7 +104,6 @@ class ChildControl extends React.Component {
     }
 
     render(){
-        console.log(this.state)
         if (!this.props.auth) {
             return <Redirect to="/" />
         }
