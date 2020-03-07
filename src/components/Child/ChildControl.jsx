@@ -32,7 +32,7 @@ class ChildControl extends React.Component {
                     this.setState({
                         name: snapshot.val().name, 
                         birthday: snapshot.val().birthday, 
-                        points: snapshot.val().points ? this.state.points : 0,
+                        points: snapshot.val().points ? snapshot.val().points : 0,
                         history: snapshot.val().history ? snapshot.val().history : []
                     });
                 })
@@ -93,6 +93,7 @@ class ChildControl extends React.Component {
     }
 
     render(){
+        console.log(this.state)
         if (!this.props.auth) {
             return <Redirect to="/" />
         }
@@ -110,6 +111,10 @@ class ChildControl extends React.Component {
                 itemsCategories.push({value: item, label: item.name + " (" + item.points + ")" })
             }
         }
+
+        let historyTimeSorted = Object.keys(this.state.history).slice();
+        historyTimeSorted.sort((a,b) => b-a);
+        historyTimeSorted = historyTimeSorted.slice(0,10);
 
         return (
             <div className="child">
@@ -167,10 +172,10 @@ class ChildControl extends React.Component {
                             </tr>
                             
                         </thead>
-                    {Object.keys(this.state.history).map(id => {
+                    {historyTimeSorted.map(id => {
                         return <tbody key={id} className="history-item">
                             <tr>
-                                <td>{Moment(id).format('LLL')}</td> 
+                                <td>{Moment(parseInt(id)).format('LLL')}</td> 
                                 <td>{this.state.history[id][0]}</td>
                                 <td>{this.state.history[id][1]}</td>
                                 <td>{this.state.history[id][2]}</td>
