@@ -3,6 +3,7 @@ import {Redirect} from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import Select from 'react-select';
 import Moment from 'moment';
+import AddReward from '../Rewards/AddReward';
 
 class ChildControl extends React.Component {
     constructor(props) {
@@ -19,7 +20,8 @@ class ChildControl extends React.Component {
             showQuantity: false,
             showRedeemButton: false,
             showHistory: false,
-            showRewards: false
+            showRewards: false,
+            showRewardForm: false
         }
         this._category = null;
         this._item = null;
@@ -106,6 +108,10 @@ class ChildControl extends React.Component {
                 showRedeemButton: false})
     }
 
+    handleRewardCreation = (reward) => {
+
+    }
+
     render(){
         if (!this.props.auth) {
             return <Redirect to="/" />
@@ -178,13 +184,17 @@ class ChildControl extends React.Component {
                     <div>
                         <h3>Rewards:</h3>
                         {
-                            this.state.rewards.length === [] ?
+                            this.state.rewards.length === 0 ?
                             <h4>No rewards have been added</h4>
                             : 
                             Object.keys(this.state.rewards).map(key => {
                                 return "item" + key
                             })
                         }
+                        <Button type="primary" onClick={() => this.setState({showRewardForm: true})}>Add a reward</Button>
+                        {this.state.showRewardForm ? 
+                        <AddReward onAddRewardCreation={this.handleRewardCreation} onHideAddRewardForm={() => this.setState({showRewardForm: false})}/>
+                        :null}
                     </div>
                 :null}
                 {this.state.showHistory ?
