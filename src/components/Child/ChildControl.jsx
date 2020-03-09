@@ -13,11 +13,13 @@ class ChildControl extends React.Component {
             points: 0, 
             history: [], 
             categories: {}, 
+            rewards: [],
             showCategories: false, 
             showItems: false,
             showQuantity: false,
             showRedeemButton: false,
-            showHistory: false
+            showHistory: false,
+            showRewards: false
         }
         this._category = null;
         this._item = null;
@@ -37,7 +39,8 @@ class ChildControl extends React.Component {
                         name: snapshot.val().name, 
                         birthday: snapshot.val().birthday, 
                         points: snapshot.val().points ? snapshot.val().points : 0,
-                        history: snapshot.val().history ? snapshot.val().history : []
+                        history: snapshot.val().history ? snapshot.val().history : [],
+                        rewards: snapshot.val().rewards ? snapshot.val().rewards : []
                     });
                 })
             .then(() => {
@@ -125,6 +128,7 @@ class ChildControl extends React.Component {
         let historyTimeSorted = Object.keys(this.state.history).slice();
         historyTimeSorted.sort((a,b) => b-a);
         historyTimeSorted = historyTimeSorted.slice(0,10);
+        console.log(historyTimeSorted);
 
         return (
             <div className="child">
@@ -133,6 +137,8 @@ class ChildControl extends React.Component {
                 <h3>Number of available points: {this.state.points}</h3>
                 <hr/>
                 <Button variant="info" type="button" onClick={this.handleRedeemPointsButtonClick}>{redeemButtonName}</Button>
+                <Button variant="success" type="button" onClick={() => this.setState({showRewards: !this.state.showRewards, showHistory: false})}>Choose Reward</Button>
+                <Button variant="secondary" type="button" onClick={() => this.setState({showHistory: !this.state.showHistory, showRewards: false})}>Show History</Button>
                 <hr />
                 <Form onSubmit={this.handleRedeemPoints}>
                 {this.state.showCategories ? 
@@ -168,9 +174,21 @@ class ChildControl extends React.Component {
                 :null}
                 </Form>
                 <hr/>
-                <Button variant="secondary" type="button" onClick={() => this.setState({showHistory: !this.state.showHistory})}>Show History</Button>
-                <hr/>
-                {this.state.showHistory ? 
+                {this.state.showRewards ?
+                    <div>
+                        <h3>Rewards:</h3>
+                        {
+                            this.state.rewards.length === [] ?
+                            <h4>No rewards have been added</h4>
+                            : 
+                            Object.keys(this.state.rewards).map(key => {
+                                return "item" + key
+                            })
+                        }
+                    </div>
+                :null}
+                {this.state.showHistory ?
+                    this.state.history !== [] ?                
                     <table>
                         <thead>
                             <tr>
@@ -194,6 +212,7 @@ class ChildControl extends React.Component {
                         </tbody>
                     })}
                     </table>
+                    : <h4>History is empty</h4>
                 :null}
             </div>
         );
