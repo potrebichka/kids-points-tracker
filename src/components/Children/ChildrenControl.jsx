@@ -23,7 +23,8 @@ class ChildrenControl extends React.Component {
                                 ...newChildrenList, 
                                 [key] : 
                                     {name: snapshot.val()[key].name, 
-                                    birthday: snapshot.val()[key].birthday}};
+                                    birthday: snapshot.val()[key].birthday,
+                                    points: snapshot.val()[key].points}};
                         }
                         this.setState({children: newChildrenList});
                 })
