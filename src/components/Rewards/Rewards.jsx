@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 import AddReward from './AddReward';
+import EditReward from './EditReward';
 import PropTypes from 'prop-types';
 
 class Rewards extends React.Component{
@@ -8,7 +9,8 @@ class Rewards extends React.Component{
     {
         super(props);
         this.state = {
-            rewards: {}
+            rewards: {},
+            showEditForm: false
         }
     }
 
@@ -41,9 +43,10 @@ class Rewards extends React.Component{
                         return (
                         <div key={key}>
                             <h3>{this.state.rewards[key].name} : {this.state.rewards[key].points} points</h3> 
-                            <Button variant="info" type="button">Edit</Button>
+                            <Button variant="info" type="button" onClick={() => this.setState({showEditForm: true})}>Edit</Button>
                             <Button variant="danger" type="button">Delete</Button>
                             <Button variant="success" type="button">Redeem</Button>
+                            <EditReward name={this.state.rewards[key].name} points={this.state.rewards[key].points} onRewardUpdate={this.handleEditReward} onHide={() => this.setState({showEditForm: false})}/>
                             <br/>
                         </div>);
                     })
@@ -51,7 +54,7 @@ class Rewards extends React.Component{
                 <br/>
                 <Button type="button" variant="primary" onClick={() => this.setState({showRewardForm: true})}>Add a reward</Button>
                 {this.state.showRewardForm ? 
-                <AddReward onAddRewardCreation={this.handleRewardCreation} onHideAddRewardForm={() => this.setState({showRewardForm: false})}/>
+                    <AddReward onRewardCreation={this.handleRewardCreation} onHide={() => this.setState({showRewardForm: false})}/>
                 :null}
             </div>
         );

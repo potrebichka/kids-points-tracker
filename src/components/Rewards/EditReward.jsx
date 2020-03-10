@@ -1,24 +1,26 @@
 import React from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import {Modal, Form, Button} from 'react-bootstrap';
 
-const AddReward = (props) => {
-
+const EditReward = (props) => {
     let _name = null;
     let _points = null;
 
-    const handleAddRewardFormSubmission = (event)  => {
+    const handleEditFormSubmission = (event) => {
         event.preventDefault();
-        props.onRewardCreation({name: _name.value, points: _points.value});
+        props.onRewardUpdate({name: _name.value, points: _points.value});
         _name.value = '';
         _points.value = null;
         props.onHide();
     }
-    return (
+
+    return(
         <Modal show onHide={props.onHide}>
-            <Form onSubmit={handleAddRewardFormSubmission}>
+            <Form onSubmit={handleEditFormSubmission}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add reward</Modal.Title>
+                    <Modal.Title>
+                        Edit Reward
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Group>
@@ -26,7 +28,7 @@ const AddReward = (props) => {
                         <Form.Control
                             type="text"
                             id="name"
-                            placeholder="Reward name"
+                            placeholder={props.name}
                             ref={(input) => {_name = input;}}
                         />
                     </Form.Group>
@@ -35,23 +37,25 @@ const AddReward = (props) => {
                         <Form.Control
                             type="number"
                             id="points"
-                            placeholder="0"
+                            placeholder={props.points}
                             ref={(input) => {_points = input;}}
                         />
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="success" type="submit">Add</Button>
-                    <Button variant="default" onClick={props.onHide}>Close</Button>
+                    <Button variant="success" type="submit">Edit</Button>
+                    <Button variant="default" type="button" onClick={props.onHide}>Close</Button>
                 </Modal.Footer>
             </Form>
         </Modal>
     );
 }
 
-AddReward.propTypes = {
-    onRewardCreation: PropTypes.func,
+EditReward.propTypes = {
+    name: PropTypes.string,
+    points: PropTypes.number,
+    onRewardUpdate: PropTypes.func,
     onHide: PropTypes.func
 }
 
-export default AddReward;
+export default EditReward;
