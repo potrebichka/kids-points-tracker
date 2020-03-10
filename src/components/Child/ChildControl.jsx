@@ -40,7 +40,13 @@ class ChildControl extends React.Component {
                         name: snapshot.val().name, 
                         birthday: snapshot.val().birthday, 
                         points: snapshot.val().points ? snapshot.val().points : 0,
-                        history: snapshot.val().history ? snapshot.val().history : []
+                        history: snapshot.val().history ? snapshot.val().history : [],
+                        showCategories: false, 
+                        showItems: false,
+                        showQuantity: false,
+                        showRedeemButton: false,
+                        showHistory: false,
+                        showRewards: false
                     });
                 })
             .then(() => {

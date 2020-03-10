@@ -5,10 +5,11 @@ import {Modal, Form, Button} from 'react-bootstrap';
 const EditReward = (props) => {
     let _name = null;
     let _points = null;
+    const intPoints = parseInt(props.points);
 
     const handleEditFormSubmission = (event) => {
         event.preventDefault();
-        props.onRewardUpdate({name: _name.value, points: _points.value, id: props.id});
+        props.onRewardUpdate({name: _name.value, id: props.id, points: parseInt(_points.value)});
         _name.value = '';
         _points.value = null;
         props.onHide();
@@ -28,7 +29,7 @@ const EditReward = (props) => {
                         <Form.Control
                             type="text"
                             id="name"
-                            placeholder={props.name}
+                            defaultValue={props.name}
                             ref={(input) => {_name = input;}}
                         />
                     </Form.Group>
@@ -37,7 +38,7 @@ const EditReward = (props) => {
                         <Form.Control
                             type="number"
                             id="points"
-                            placeholder={props.points}
+                            defaultValue={intPoints}
                             ref={(input) => {_points = input;}}
                         />
                     </Form.Group>

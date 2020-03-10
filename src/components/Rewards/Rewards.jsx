@@ -2,6 +2,7 @@ import React from 'react';
 import {Button} from 'react-bootstrap';
 import AddReward from './AddReward';
 import EditReward from './EditReward';
+import DeleteRewardConfirmation from './DeleteRewardConfirmation';
 import PropTypes from 'prop-types';
 
 class Rewards extends React.Component{
@@ -10,7 +11,8 @@ class Rewards extends React.Component{
         super(props);
         this.state = {
             rewards: {},
-            showEditForm: false
+            showEditForm: false,
+            showDeleteConfirmation: false
         }
     }
 
@@ -34,10 +36,18 @@ class Rewards extends React.Component{
     handleEditReward = (reward) => {
         var id = reward.id;
         delete reward.id;
-        var copyStateSlice = {...this.state.rewards, id: reward};
+        var copyStateSlice = {...this.state.rewards, [id]: {name: reward.name, points: reward.points}};
         this.setState({rewards: copyStateSlice});
 
         this.props.firebase.dbRef.ref('/children/' + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/rewards/" + id).update({name: reward.name, points: reward.points});
+    }
+
+    handleRewardDeletion = (id) => {
+        var copyStateSlice = {...this.state.rewards};
+        delete copyStateSlice[id];
+        this.setState({rewards: copyStateSlice});
+
+        this.props.firebase.dbRef.ref('/children/' + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/rewards/" + id).remove();
     }
 
     render() {
@@ -53,9 +63,14 @@ class Rewards extends React.Component{
                         <div key={key}>
                             <h3>{this.state.rewards[key].name} : {this.state.rewards[key].points} points</h3> 
                             <Button variant="info" type="button" onClick={() => this.setState({showEditForm: true})}>Edit</Button>
-                            <Button variant="danger" type="button">Delete</Button>
+                            <Button variant="danger" type="button" onClick={() => this.setState({showDeleteConfirmation: true})}>Delete</Button>
                             <Button variant="success" type="button">Redeem</Button>
-                            <EditReward name={this.state.rewards[key].name} points={this.state.rewards[key].points} onRewardUpdate={this.handleEditReward} id={key} onHide={() => this.setState({showEditForm: false})}/>
+                            {this.state.showEditForm ? 
+                                <EditReward name={this.state.rewards[key].name} points={this.state.rewards[key].points} onRewardUpdate={this.handleEditReward} id={key} onHide={() => this.setState({showEditForm: false})}/> 
+                            :null}
+                            {this.state.showDeleteConfirmation ? 
+                                <DeleteRewardConfirmation name={this.state.rewards[key].name} onHide={() => this.setState({showDeleteConfirmation: false})} onRewardDeletion={() => {this.handleRewardDeletion(key)}}/>
+                            :null}
                             <br/>
                         </div>);
                     })

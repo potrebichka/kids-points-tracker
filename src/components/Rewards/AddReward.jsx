@@ -9,7 +9,7 @@ const AddReward = (props) => {
 
     const handleAddRewardFormSubmission = (event)  => {
         event.preventDefault();
-        props.onRewardCreation({name: _name.value, points: _points.value});
+        props.onRewardCreation({name: _name.value, points: parseInt(_points.value)});
         _name.value = '';
         _points.value = null;
         props.onHide();
