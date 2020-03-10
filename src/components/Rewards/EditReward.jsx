@@ -8,7 +8,7 @@ const EditReward = (props) => {
 
     const handleEditFormSubmission = (event) => {
         event.preventDefault();
-        props.onRewardUpdate({name: _name.value, points: _points.value});
+        props.onRewardUpdate({name: _name.value, points: _points.value, id: props.id});
         _name.value = '';
         _points.value = null;
         props.onHide();

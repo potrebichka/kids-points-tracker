@@ -31,6 +31,15 @@ class Rewards extends React.Component{
         this.setState({rewards: rewardsStateSlice});
     }
 
+    handleEditReward = (reward) => {
+        var id = reward.id;
+        delete reward.id;
+        var copyStateSlice = {...this.state.rewards, id: reward};
+        this.setState({rewards: copyStateSlice});
+
+        this.props.firebase.dbRef.ref('/children/' + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/rewards/" + id).update({name: reward.name, points: reward.points});
+    }
+
     render() {
         return (
             <div>
@@ -46,7 +55,7 @@ class Rewards extends React.Component{
                             <Button variant="info" type="button" onClick={() => this.setState({showEditForm: true})}>Edit</Button>
                             <Button variant="danger" type="button">Delete</Button>
                             <Button variant="success" type="button">Redeem</Button>
-                            <EditReward name={this.state.rewards[key].name} points={this.state.rewards[key].points} onRewardUpdate={this.handleEditReward} onHide={() => this.setState({showEditForm: false})}/>
+                            <EditReward name={this.state.rewards[key].name} points={this.state.rewards[key].points} onRewardUpdate={this.handleEditReward} id={key} onHide={() => this.setState({showEditForm: false})}/>
                             <br/>
                         </div>);
                     })
