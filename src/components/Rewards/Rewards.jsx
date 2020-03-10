@@ -3,6 +3,7 @@ import {Button} from 'react-bootstrap';
 import AddReward from './AddReward';
 import EditReward from './EditReward';
 import DeleteRewardConfirmation from './DeleteRewardConfirmation';
+import SelectRewardConfirmation from './SelectRewardConfirmation';
 import PropTypes from 'prop-types';
 
 class Rewards extends React.Component{
@@ -12,7 +13,8 @@ class Rewards extends React.Component{
         this.state = {
             rewards: {},
             showEditForm: false,
-            showDeleteConfirmation: false
+            showDeleteConfirmation: false,
+            showSelectConfirmation: false
         }
     }
 
@@ -64,12 +66,15 @@ class Rewards extends React.Component{
                             <h3>{this.state.rewards[key].name} : {this.state.rewards[key].points} points</h3> 
                             <Button variant="info" type="button" onClick={() => this.setState({showEditForm: true})}>Edit</Button>
                             <Button variant="danger" type="button" onClick={() => this.setState({showDeleteConfirmation: true})}>Delete</Button>
-                            <Button variant="success" type="button">Redeem</Button>
+                            <Button variant="success" type="button" onClick={() => this.setState({showSelectConfirmation: true})}>Select</Button>
                             {this.state.showEditForm ? 
                                 <EditReward name={this.state.rewards[key].name} points={this.state.rewards[key].points} onRewardUpdate={this.handleEditReward} id={key} onHide={() => this.setState({showEditForm: false})}/> 
                             :null}
                             {this.state.showDeleteConfirmation ? 
                                 <DeleteRewardConfirmation name={this.state.rewards[key].name} onHide={() => this.setState({showDeleteConfirmation: false})} onRewardDeletion={() => {this.handleRewardDeletion(key)}}/>
+                            :null}
+                            {this.state.showSelectConfirmation ?
+                                <SelectRewardConfirmation name={this.state.rewards[key].name} points={this.state.rewards[key].points} onHide={() => this.setState({showSelectConfirmation: false})} onRewardSelection={() => this.props.onRewardSelection(key)}/>
                             :null}
                             <br/>
                         </div>);
@@ -86,7 +91,8 @@ class Rewards extends React.Component{
 }
 
 Rewards.propTypes = {
-    id: PropTypes.string
+    id: PropTypes.string,
+    onRewardSelection: PropTypes.func
 }
 
 export default Rewards;

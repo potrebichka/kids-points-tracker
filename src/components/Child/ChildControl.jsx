@@ -112,7 +112,40 @@ class ChildControl extends React.Component {
                 showItems: false,
                 showQuantity: false,
                 showRedeemButton: false,
-                showRewards: false})
+                showRewards: false
+            })
+    }
+
+    handleRewardSelection = (rewardId) => {
+        
+        let reward = {};
+        this.props.firebase.dbRef.ref("/children/" + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/rewards/" + rewardId).once("value").then(snapshot => 
+        {
+            reward = snapshot.val();
+        })
+        .then(() =>
+        {
+            let history = {
+                ...this.state.history, 
+                [new Moment()]:  
+                    ["Reward", reward.name, 1, -parseInt(reward.points)]
+            };
+    
+            this.props.firebase.dbRef.ref("/children/" + this.props.firebase.auth.currentUser.uid + "/" + this.props.id).update({points: this.state.points - reward.points});
+
+            this.props.firebase.dbRef.ref('/children/' + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/history/" + new Moment() + "/").update( ["Reward", reward.name, 1, -parseInt(reward.points)]);
+
+            this.setState({
+                points: this.state.points-parseInt(reward.points), 
+                history: history, 
+                showCategories: false, 
+                showItems: false,
+                showQuantity: false,
+                showRedeemButton: false,
+                showRewards: false
+            });
+
+        });
     }
 
     render(){
@@ -183,7 +216,7 @@ class ChildControl extends React.Component {
                 </Form>
                 <hr/>
                 {this.state.showRewards ?
-                    <Rewards id={this.props.id} firebase={this.props.firebase}/>
+                    <Rewards id={this.props.id} firebase={this.props.firebase} onRewardSelection={this.handleRewardSelection}/>
                 :null}
                 {this.state.showHistory ?
                     this.state.history !== [] ?                
