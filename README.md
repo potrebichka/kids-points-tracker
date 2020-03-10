@@ -116,11 +116,14 @@ How should look structure:
 }
 ```
 
-Research how to include CRUD functionality to project
 
 ## Specs
 
 
+## NEXT STEPS
+* restrusture ChildControl Component. Move logic to separate files.
+* Amazon Market Api
+* Add state for rewards: template or use only once
 
 
 ## Available Scripts
