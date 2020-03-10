@@ -4,6 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import Select from 'react-select';
 import Moment from 'moment';
 import AddReward from '../Rewards/AddReward';
+import Rewards from './../Rewards/Rewards';
 
 class ChildControl extends React.Component {
     constructor(props) {
@@ -13,15 +14,13 @@ class ChildControl extends React.Component {
             birthday: null, 
             points: 0, 
             history: [], 
-            categories: {}, 
-            rewards: [],
+            categories: {},
             showCategories: false, 
             showItems: false,
             showQuantity: false,
             showRedeemButton: false,
             showHistory: false,
-            showRewards: false,
-            showRewardForm: false
+            showRewards: false
         }
         this._category = null;
         this._item = null;
@@ -41,8 +40,7 @@ class ChildControl extends React.Component {
                         name: snapshot.val().name, 
                         birthday: snapshot.val().birthday, 
                         points: snapshot.val().points ? snapshot.val().points : 0,
-                        history: snapshot.val().history ? snapshot.val().history : [],
-                        rewards: snapshot.val().rewards ? snapshot.val().rewards : []
+                        history: snapshot.val().history ? snapshot.val().history : []
                     });
                 })
             .then(() => {
@@ -88,7 +86,8 @@ class ChildControl extends React.Component {
             showCategories: false, 
             showItems: false,
             showQuantity: false,
-            showRedeemButton: false
+            showRedeemButton: false,
+            showRewards: false
         });
 
     }
@@ -99,20 +98,15 @@ class ChildControl extends React.Component {
                 showCategories: true, 
                 showItems: false, 
                 showQuanity: false, 
-                showRedeemButton: false})
+                showRedeemButton: false, 
+                showRewards: false})
                 :
             this.setState({
                 showCategories: false, 
                 showItems: false,
                 showQuantity: false,
-                showRedeemButton: false})
-    }
-
-    handleRewardCreation = (reward) => {
-        var key = this.props.firebase.dbRef.ref('/children/' + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/rewards/" ).push().key;
-        this.props.firebase.dbRef.ref('/children/' + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/rewards/" + key).update({name: reward.name, points: reward.points});
-        var rewardsStateSlice = {...this.state.rewards, key: {name: reward.name, points: reward.points}};
-        this.setState({rewards: rewardsStateSlice});
+                showRedeemButton: false,
+                showRewards: false})
     }
 
     render(){
@@ -183,27 +177,7 @@ class ChildControl extends React.Component {
                 </Form>
                 <hr/>
                 {this.state.showRewards ?
-                    <div>
-                        <h3>Rewards:</h3>
-                        {
-                            this.state.rewards.length === 0 ?
-                            <h4>No rewards have been added</h4>
-                            :                            
-                            Object.keys(this.state.rewards).map(key => {
-                                return (
-                                <div key={key}>
-                                    <h3>{this.state.rewards[key].name} : {this.state.rewards[key].points} points</h3> 
-                                    <Button variant="info">Edit</Button>
-                                    <Button variant="danger">Delete</Button>
-                                    <Button variant="success">Redeem</Button>
-                                </div>);
-                            })
-                        }
-                        <Button type="primary" onClick={() => this.setState({showRewardForm: true})}>Add a reward</Button>
-                        {this.state.showRewardForm ? 
-                        <AddReward onAddRewardCreation={this.handleRewardCreation} onHideAddRewardForm={() => this.setState({showRewardForm: false})}/>
-                        :null}
-                    </div>
+                    <Rewards id={this.props.id} firebase={this.props.firebase}/>
                 :null}
                 {this.state.showHistory ?
                     this.state.history !== [] ?                
