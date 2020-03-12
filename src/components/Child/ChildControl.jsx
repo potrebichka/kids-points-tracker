@@ -74,14 +74,14 @@ class ChildControl extends React.Component {
         
         let reward = {};
         this.props.firebase.dbRef.ref("/children/" + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/rewards/" + rewardId).once("value").then(snapshot => 
-        {
-            reward = snapshot.val();
-        })
+            {
+                reward = snapshot.val();
+            })
         .then(() =>
         {
             let history = {
                 ...this.state.history, 
-                [new Moment()]:  
+                [Date.now()]:  
                     ["Reward", reward.name, 1, -parseInt(reward.points)]
             };
     
