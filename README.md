@@ -126,7 +126,7 @@ How should look structure:
 * Amazon Market Api
 * Add state for rewards: template or use only once
 * Handle case when you don't have enough points for rewards
-
+* Handle history? Update? How many records to save?
 
 ## Available Scripts
 
