@@ -121,9 +121,11 @@ How should look structure:
 
 
 ## NEXT STEPS
-* restrusture ChildControl Component. Move logic to separate files.
+
+* Restrusture ChildControl Component. Move logic to separate files.
 * Amazon Market Api
 * Add state for rewards: template or use only once
+* Handle case when you don't have enough points for rewards
 
 
 ## Available Scripts
