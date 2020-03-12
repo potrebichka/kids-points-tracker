@@ -58,7 +58,7 @@ class ChildControl extends React.Component {
 
         let history = {
             ...this.state.history, 
-            [new Moment()]:  result.history
+            [Date.now()]:  result.history
         };
 
         this.setState({
