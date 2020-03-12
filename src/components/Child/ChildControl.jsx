@@ -1,10 +1,10 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-import { Button, Form } from 'react-bootstrap';
-import Select from 'react-select';
-import Moment from 'moment';
-import AddReward from '../Rewards/AddReward';
+import { Button} from 'react-bootstrap';
 import Rewards from './../Rewards/Rewards';
+import RedeemPoints from './RedeemPoints';
+import PropTypes from 'prop-types';
+import Moment from 'moment';
 
 class ChildControl extends React.Component {
     constructor(props) {
@@ -14,17 +14,10 @@ class ChildControl extends React.Component {
             birthday: null, 
             points: 0, 
             history: [], 
-            categories: {},
-            showCategories: false, 
-            showItems: false,
-            showQuantity: false,
-            showRedeemButton: false,
+            showRedeemForm: false,
             showHistory: false,
-            showRewards: false
+            showRewards: false,
         }
-        this._category = null;
-        this._item = null;
-        this._quantity = 0;
     }
 
     componentDidMount() {
@@ -41,27 +34,11 @@ class ChildControl extends React.Component {
                         birthday: snapshot.val().birthday, 
                         points: snapshot.val().points ? snapshot.val().points : 0,
                         history: snapshot.val().history ? snapshot.val().history : [],
-                        showCategories: false, 
-                        showItems: false,
-                        showQuantity: false,
-                        showRedeemButton: false,
                         showHistory: false,
-                        showRewards: false
+                        showRewards: false,
+                        showRedeemForm: false
                     });
                 })
-            .then(() => {
-                this.props.firebase.dbRef.ref("categories/" + this.props.firebase.auth.currentUser.uid + "/").once("value")
-                    .then(snapshot => {
-                        let categories = {};
-                        for (let key in snapshot.val()) {
-                            categories[snapshot.val()[key].name] = [];
-                            for (let itemKey in snapshot.val()[key].items) {
-                                categories[snapshot.val()[key].name].push(snapshot.val()[key].items[itemKey]);
-                            }
-                        }
-                        this.setState({categories: categories})
-                    })
-            })
         }
     }
 
@@ -72,48 +49,25 @@ class ChildControl extends React.Component {
         }
       }
 
-    handleRedeemPoints = event => {
-        event.preventDefault();
-        const newPoints = this.state.points + parseInt(this._item.value.points) * parseInt(this._quantity.value);
+    handleRedeemPoints = (result) => {
+        const newPoints = this.state.points + result.points;
 
         this.props.firebase.dbRef.ref('/children/' + this.props.firebase.auth.currentUser.uid + "/" + this.props.id ).update({points: newPoints});
-        this.props.firebase.dbRef.ref('/children/' + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/history/" + new Moment() + "/").update( [this._category.value, this._item.value.name, this._quantity.value, parseInt(this._item.value.points) * parseInt(this._quantity.value)]);
+        this.props.firebase.dbRef.ref('/children/' + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/history/" + new Moment() + "/").update( result.history);
 
 
         let history = {
             ...this.state.history, 
-            [new Moment()]:  
-                [this._category.value, this._item.value.name, this._quantity.value, parseInt(this._item.value.points) * parseInt(this._quantity.value)]
+            [new Moment()]:  result.history
         };
 
         this.setState({
             points: newPoints, 
             history: history, 
-            showCategories: false, 
-            showItems: false,
-            showQuantity: false,
-            showRedeemButton: false,
-            showRewards: false
+            showRewards: false,
+            showRedeemForm: false
         });
 
-    }
-
-    handleRedeemPointsButtonClick = () => {
-        !this.state.showCategories ? 
-            this.setState({
-                showCategories: true, 
-                showItems: false, 
-                showQuanity: false, 
-                showRedeemButton: false, 
-                showRewards: false})
-                :
-            this.setState({
-                showCategories: false, 
-                showItems: false,
-                showQuantity: false,
-                showRedeemButton: false,
-                showRewards: false
-            })
     }
 
     handleRewardSelection = (rewardId) => {
@@ -138,10 +92,7 @@ class ChildControl extends React.Component {
             this.setState({
                 points: this.state.points-parseInt(reward.points), 
                 history: history, 
-                showCategories: false, 
-                showItems: false,
-                showQuantity: false,
-                showRedeemButton: false,
+                showRedeemForm: false,
                 showRewards: false
             });
 
@@ -151,20 +102,6 @@ class ChildControl extends React.Component {
     render(){
         if (!this.props.auth) {
             return <Redirect to="/" />
-        }
-        const redeemButtonName = this.state.showCategories ? "Hide redeem points form" : "Redeem points";
-
-        let categoriesOptions = [];
-        for (let key in this.state.categories) {
-            categoriesOptions.push({value: key, label: key})
-        }
-
-        let itemsCategories = [];
-        if (this._category) {     
-            for (let i in this.state.categories[this._category.value]) {
-                const item = this.state.categories[this._category.value][i];
-                itemsCategories.push({value: item, label: item.name + " (" + item.points + ")" })
-            }
         }
 
         let historyTimeSorted = Object.keys(this.state.history).slice();
@@ -177,43 +114,11 @@ class ChildControl extends React.Component {
                 <em>{this.state.birthday}</em>
                 <h3>Number of available points: {this.state.points}</h3>
                 <hr/>
-                <Button variant="info" type="button" onClick={this.handleRedeemPointsButtonClick}>{redeemButtonName}</Button>
+                <Button variant="info" type="button" onClick={() => this.setState({showRedeemForm: true})}>Redeem Points</Button>
                 <Button variant="success" type="button" onClick={() => this.setState({showRewards: !this.state.showRewards, showHistory: false})}>Choose Reward</Button>
                 <Button variant="secondary" type="button" onClick={() => this.setState({showHistory: !this.state.showHistory, showRewards: false})}>Show History</Button>
                 <hr />
-                <Form onSubmit={this.handleRedeemPoints}>
-                {this.state.showCategories ? 
-                        <Select 
-                            options={categoriesOptions} 
-                            className="select" 
-                            placeholder="Select Category ..." 
-                            onChange={(input) => {this.setState({showItems: true}); this._category = input;}} 
-                            />
-                : null }
-                {this.state.showItems ? 
-                    <Select 
-                        options={itemsCategories} 
-                        className="select" 
-                        placeholder="Select Item ..." 
-                        onChange={(input) => {this.setState({showQuantity: true}); this._item = input}} 
-                        />
-                : null}
-                {this.state.showQuantity ? 
-                    <Form.Group>
-                        <Form.Label className="control-label">Quantity:</Form.Label>
-                        <br/>
-                        <input 
-                            type="number" 
-                            name="quantity" 
-                            className="select"
-                            onChange={(input) => {this.setState({showRedeemButton: true}); this._quantity = input}}
-                            ref={(input) => this._quantity = input}/>
-                    </Form.Group>
-                : null}
-                {this.state.showRedeemButton ? 
-                    <Button type="info" type="submit">Redeem</Button>
-                :null}
-                </Form>
+                {this.state.showRedeemForm ? <RedeemPoints firebase={this.props.firebase} id={this.props.id} onRedeemPoints={this.handleRedeemPoints} onHide={() => this.setState({showRedeemForm: false})}/> : null}
                 <hr/>
                 {this.state.showRewards ?
                     <Rewards id={this.props.id} firebase={this.props.firebase} onRewardSelection={this.handleRewardSelection}/>
@@ -248,6 +153,10 @@ class ChildControl extends React.Component {
             </div>
         );
     }
+}
+
+ChildControl.propTypes = {
+    id: PropTypes.string
 }
 
 export default ChildControl;
