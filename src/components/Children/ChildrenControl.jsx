@@ -86,10 +86,12 @@ class ChildrenControl extends React.Component {
                                         onDeleteClick={() => {this.handleChildDeletion(childId)}}/>
                             })
                         }
-                        <Link to='/children/new'><button type="button" className="btn btn-info" onClick={this.handleClick}>Add a new child</button></Link>
+                        <button type="button" className="btn btn-info" onClick={this.handleClick}>Add a new child</button>
+                        {this.state.showCreateNewChildForm ? 
+                            <NewChild onNewChildCreation={this.handleNewChildCreation} onHide={this.handleClick}/>
+                        :null}
                     </div>
                 }
-                <Route path='/children/new' render={() => <NewChild onNewChildCreation={this.handleNewChildCreation}/>}/>
             </div>
         );
     }

@@ -4,12 +4,6 @@ import './Home.scss';
 const Home = (props) => {
     return (
         <div className="container home">
-            {/* <FirebaseContext.Consumer>
-                {firebase => {
-                    console.log(firebase);
-                    return <div>I've access to Firebase and render smthing:</div>
-                }}
-            </FirebaseContext.Consumer> */}
             <br/>
             <h1>
                 Welcome to Kids Points Tracker!
