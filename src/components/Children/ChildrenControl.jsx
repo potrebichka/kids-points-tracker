@@ -43,9 +43,6 @@ class ChildrenControl extends React.Component {
         this.setState({children: newState, showCreateNewChildForm: false})
     }
 
-    handleClick = () => {
-        this.setState({showCreateNewChildForm: true})
-    }
 
     handleChildEditing = (updatedChild) => {
         const updatedChildState = {...this.state.children, [updatedChild.id]: updatedChild};
@@ -86,9 +83,9 @@ class ChildrenControl extends React.Component {
                                         onDeleteClick={() => {this.handleChildDeletion(childId)}}/>
                             })
                         }
-                        <button type="button" className="btn btn-info" onClick={this.handleClick}>Add a new child</button>
+                        <button type="button" className="btn btn-info" onClick={() => this.setState({showCreateNewChildForm: true})}>Add a new child</button>
                         {this.state.showCreateNewChildForm ? 
-                            <NewChild onNewChildCreation={this.handleNewChildCreation} onHide={this.handleClick}/>
+                            <NewChild onNewChildCreation={this.handleNewChildCreation} onHide={() => this.setState({showCreateNewChildForm: false})}/>
                         :null}
                     </div>
                 }
