@@ -60,7 +60,7 @@ class RedeemPoints extends React.Component {
         return(
             <Modal show onHide={this.props.onHide}>
                 <Form onSubmit={this.handleRedeemPoints}>
-                    <Modal.Header closeButton>
+                    <Modal.Header closeButton className="modal-title">
                         <Modal.Title>Redeem Points</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -81,14 +81,15 @@ class RedeemPoints extends React.Component {
                                 />
                         : null}
                         {this.state.showQuantity ? 
-                            <Form.Group>
-                                <Form.Label className="control-label">Quantity:</Form.Label>
-                                <br/>
+                            <Form.Group style={{"textAlign": "center"}}>
+                                {/* <label className="control-label" style={{"textAlign": "center"}}>Quantity:</label> */}
+                                
                                 <input 
                                     type="number" 
                                     name="quantity" 
                                     className="select"
                                     onChange={(input) => {this.setState({showRedeemButton: true}); this._quantity = input}}
+                                    placeholder=" Quantity"
                                     ref={(input) => this._quantity = input}/>
                             </Form.Group>
                         : null}

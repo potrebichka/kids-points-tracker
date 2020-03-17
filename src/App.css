@@ -434,7 +434,9 @@ button.btn-floating {
 .select {
   width: 60%;
   margin-left: 20%;
-  margin-right: 20%
+  margin-right: 20%;
+  padding: 5px;
+  text-align: center;
 }
 
 .history-item {
@@ -451,4 +453,24 @@ table, th, td {
 
 th, td {
   padding: 5px
+}
+
+.modal{
+  color: #000000;
+}
+
+.modal-header {
+  background-color: #226089;
+}
+
+.modal-body{
+  background-color: #4592af;
+}
+
+.modal-footer {
+  background-color: #226089;
+}
+
+.modal label {
+  color: black;
 }
