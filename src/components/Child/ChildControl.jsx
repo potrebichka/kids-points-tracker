@@ -124,7 +124,7 @@ class ChildControl extends React.Component {
                     <Rewards id={this.props.id} firebase={this.props.firebase} onRewardSelection={this.handleRewardSelection}/>
                 :null}
                 {this.state.showHistory ?
-                    this.state.history !== [] ?                
+                    historyTimeSorted.length !== 0 ?                
                     <table>
                         <thead>
                             <tr>
