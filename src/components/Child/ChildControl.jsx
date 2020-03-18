@@ -3,6 +3,7 @@ import {Redirect} from 'react-router-dom';
 import { Button} from 'react-bootstrap';
 import Rewards from './../Rewards/Rewards';
 import RedeemPoints from './RedeemPoints';
+import ShowHistory from './ShowHistory';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 
@@ -104,10 +105,6 @@ class ChildControl extends React.Component {
             return <Redirect to="/" />
         }
 
-        let historyTimeSorted = Object.keys(this.state.history).slice();
-        historyTimeSorted.sort((a,b) => b-a);
-        historyTimeSorted = historyTimeSorted.slice(0,10);
-
         return (
             <div className="child">
                 <h1>{this.state.name}</h1>
@@ -124,31 +121,7 @@ class ChildControl extends React.Component {
                     <Rewards id={this.props.id} firebase={this.props.firebase} onRewardSelection={this.handleRewardSelection}/>
                 :null}
                 {this.state.showHistory ?
-                    historyTimeSorted.length !== 0 ?                
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Category</th>
-                                <th>Item</th>
-                                <th>Quantity</th>
-                                <th>Points</th>
-                            </tr>
-                            
-                        </thead>
-                    {historyTimeSorted.map(id => {
-                        return <tbody key={id} className="history-item">
-                            <tr>
-                                <td>{Moment(parseInt(id)).format('LLL')}</td> 
-                                <td>{this.state.history[id][0]}</td>
-                                <td>{this.state.history[id][1]}</td>
-                                <td>{this.state.history[id][2]}</td>
-                                <td>{this.state.history[id][3]}</td>
-                            </tr>
-                        </tbody>
-                    })}
-                    </table>
-                    : <h4>History is empty</h4>
+                    <ShowHistory history={this.state.history} />
                 :null}
             </div>
         );
