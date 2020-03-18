@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Route, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import CategoryControl from './CategoryControl';
 import NewCategory from './NewCategory';
 import {Button} from 'react-bootstrap';

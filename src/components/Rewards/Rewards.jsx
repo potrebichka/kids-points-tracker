@@ -15,6 +15,7 @@ class Rewards extends React.Component{
             showEditForm: false,
             showDeleteConfirmation: false,
             showSelectConfirmation: false,
+            showRewardForm: false,
             currentKey: null
         }
     }
@@ -68,13 +69,13 @@ class Rewards extends React.Component{
                             <Button variant="info" type="button" onClick={() => this.setState({showEditForm: true, currentKey: {key}})}>Edit</Button>
                             <Button variant="danger" type="button" onClick={() => this.setState({showDeleteConfirmation: true, currentKey: {key}})}>Delete</Button>
                             <Button variant="success" type="button" onClick={() => this.setState({showSelectConfirmation: true, currentKey: {key}})}>Select</Button>
-                            {this.state.showEditForm && (key == this.state.currentKey.key) ? 
+                            {this.state.showEditForm && (key === this.state.currentKey.key) ? 
                                 <EditReward name={this.state.rewards[key].name} points={this.state.rewards[key].points} onRewardUpdate={this.handleEditReward} id={key} onHide={() => this.setState({showEditForm: false, currentKey: null})}/> 
                             :null}
-                            {this.state.showDeleteConfirmation && (key == this.state.currentKey.key) ? 
+                            {this.state.showDeleteConfirmation && (key === this.state.currentKey.key) ? 
                                 <DeleteRewardConfirmation name={this.state.rewards[key].name} onHide={() => this.setState({showDeleteConfirmation: false})} onRewardDeletion={() => {this.handleRewardDeletion(key); this.setState({currentKey: null})}}/>
                             :null}
-                            {this.state.showSelectConfirmation && (key == this.state.currentKey.key) ? 
+                            {this.state.showSelectConfirmation && (key === this.state.currentKey.key) ? 
                                 <SelectRewardConfirmation name={this.state.rewards[key].name} points={this.state.rewards[key].points} onHide={() => this.setState({showSelectConfirmation: false})} onRewardSelection={() => {this.props.onRewardSelection(key); this.setState({currentKey: null})}}/>
                             :null}
                             <hr/>

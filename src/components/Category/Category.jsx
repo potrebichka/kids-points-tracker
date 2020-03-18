@@ -18,7 +18,7 @@ class Category extends React.Component {
     }
 
     handleNewItemCreation = (newItem) => {
-        if (Object.keys(this.state.items).length == 0) {
+        if (Object.keys(this.state.items).length === 0) {
             this.props.firebase.dbRef.ref('/categories/' + this.props.firebase.auth.currentUser.uid + "/" + this.state.id).update({items: {}});
         }
         var newItemId = this.props.firebase.dbRef.ref('/categories/' +  this.props.firebase.auth.currentUser.uid + "/" + this.state.id + "/items/").push().key;

@@ -22,7 +22,6 @@ const Header = (props) => {
     const handleShowLogin = () => setShowLogin(true);
 
     const handleCloseMessage = () => setShowMessage(false);
-    const handleShowMessage = () => setShowMessage(true);
 
     const handleRegisterLink = () => {setShowLogin(false); setShowRegister(true)}
 
@@ -32,8 +31,6 @@ const Header = (props) => {
         props.onAuthStatusChange();
     }
 
-    
-    {/* <Link to="/">Home</Link> | <Link to="/account">Create new post</Link> */}
     let classAuth ="auth";
     if (props.auth) {
         classAuth += " auth-true";

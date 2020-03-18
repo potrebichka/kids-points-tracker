@@ -12,7 +12,7 @@ import CategoryRoute from './components/Category/CategoryRoute';
 import ChildRoute from './components/Child/ChildRoute';
 import Error404 from './components/Error404';
 
-import Firebase, {FirebaseContext} from './components/Firebase';
+import {FirebaseContext} from './components/Firebase';
 
 class App extends React.Component {
   state = {

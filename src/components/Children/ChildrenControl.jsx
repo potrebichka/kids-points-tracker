@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, Route, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import Child from '../Child';
 import NewChild from './NewChild';
 

@@ -3,8 +3,6 @@ import {Modal, Form, Button} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import {withFirebase} from '../Firebase';
 
-
-
 const INITIAL_STATE = {
     firstName: '',
     lastName: '',
