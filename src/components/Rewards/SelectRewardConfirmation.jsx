@@ -14,7 +14,7 @@ const SelectRewardConfirmation = (props) => {
                 <h4>Points: {props.points}</h4>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="danger" type="button" onClick={() => {props.onHide(); props.onRewardSelection();}}>Yes</Button>
+                <Button variant="danger" type="button" onClick={() => {props.onHide(); props.onRewardSelection(false);}}>Yes</Button>
                 <Button variant="info" type="button" onClick={props.onHide}>No</Button>
             </Modal.Footer>
         </Modal>

@@ -71,7 +71,7 @@ class ChildControl extends React.Component {
 
     }
 
-    handleRewardSelection = (rewardId) => {
+    handleRewardSelection  = (rewardId) => {
         
         let reward = {};
         this.props.firebase.dbRef.ref("/children/" + this.props.firebase.auth.currentUser.uid + "/" + this.props.id + "/rewards/" + rewardId).once("value").then(snapshot => 
@@ -96,7 +96,6 @@ class ChildControl extends React.Component {
                 showRedeemForm: false,
                 showRewards: false
             });
-
         });
     }
 
@@ -118,7 +117,7 @@ class ChildControl extends React.Component {
                 {this.state.showRedeemForm ? <RedeemPoints firebase={this.props.firebase} id={this.props.id} onRedeemPoints={this.handleRedeemPoints} onHide={() => this.setState({showRedeemForm: false})}/> : null}
                 <hr/>
                 {this.state.showRewards ?
-                    <Rewards id={this.props.id} firebase={this.props.firebase} onRewardSelection={this.handleRewardSelection}/>
+                    <Rewards id={this.props.id} firebase={this.props.firebase} points={this.state.points} onRewardSelection={this.handleRewardSelection}/>
                 :null}
                 {this.state.showHistory ?
                     <ShowHistory history={this.state.history} />
