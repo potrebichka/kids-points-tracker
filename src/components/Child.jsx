@@ -46,7 +46,7 @@ const Child = (props) => {
                     <p>Name: {props.name}</p>
                     <p>Birthday: {props.birthday}</p>
                     <p>Your child is {yearDifference} years old.</p>
-                    <p>Points: {props.points}</p>
+                    <p>Points: {props.points ? props.points : 0}</p>
                     <button type="button" className="btn btn-success" onClick={handleShowEditForm}>Edit Child</button>
                     <button type="button" className="btn btn-danger"  onClick={() => setShowDeleteForm(true)}>Delete Child</button>
                     <hr/>
