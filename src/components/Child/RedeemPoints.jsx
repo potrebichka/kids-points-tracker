@@ -13,11 +13,13 @@ class RedeemPoints extends React.Component {
             showItems: false,
             showQuantity: false,
             showRedeemButton: false,
+            showComment: false
         };
 
         this._category = null;
         this._item = null;
         this._quantity = 0;
+        this._comment = null;
     }
 
     componentDidMount() {
@@ -38,7 +40,7 @@ class RedeemPoints extends React.Component {
         event.preventDefault();
 
         this.props.onRedeemPoints({points: parseInt(this._item.value.points) * parseInt(this._quantity.value), history:  
-        [this._category.value, this._item.value.name, this._quantity.value, parseInt(this._item.value.points) * parseInt(this._quantity.value)]});
+        [this._category.value, this._item.value.name, this._quantity.value, parseInt(this._item.value.points) * parseInt(this._quantity.value), this._comment.value]});
 
     }
 
@@ -88,11 +90,22 @@ class RedeemPoints extends React.Component {
                                     type="number" 
                                     name="quantity" 
                                     className="select"
-                                    onChange={(input) => {this.setState({showRedeemButton: true}); this._quantity = input}}
+                                    onChange={(input) => {this.setState({showComment: true}); this._quantity = input}}
                                     placeholder=" Quantity"
                                     ref={(input) => this._quantity = input}/>
                             </Form.Group>
                         : null}
+                        {this.state.showComment ?
+                            <Form.Group style={{"textAlign": "center"}}>
+                                <input 
+                                    type="text" 
+                                    name="comment" 
+                                    className="select"
+                                    onChange={(input) => {this.setState({showRedeemButton: true}); this._comment = input}}
+                                    placeholder=" Comment"
+                                    ref={(input) => this._comment = input}/>
+                        </Form.Group>
+                        :null}
                     </Modal.Body>
                     <Modal.Footer>
                         {this.state.showRedeemButton ? 

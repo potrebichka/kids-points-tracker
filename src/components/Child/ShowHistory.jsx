@@ -19,6 +19,7 @@ const ShowHistory = (props) => {
                         <th>Item</th>
                         <th>Quantity</th>
                         <th>Points</th>
+                        <th>Comment</th>
                     </tr>
                 </thead>
                 {historyTimeSorted.map(id => {
@@ -29,6 +30,7 @@ const ShowHistory = (props) => {
                             <td>{props.history[id][1]}</td>
                             <td>{props.history[id][2]}</td>
                             <td>{props.history[id][3]}</td>
+                            <td>{props.history[id][4]}</td>
                         </tr>
                     </tbody>
                 })}
