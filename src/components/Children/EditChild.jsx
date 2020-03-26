@@ -6,9 +6,9 @@ const EditChild = (props) => {
     let _name = null;
     let _birthday = null;
 
-    function handleEditChildFormSubmission (event) {
+    const handleEditChildFormSubmission = (event) => {
         event.preventDefault();
-        props.onChildEditing({name: _name.value, birthday: _birthday.value});
+        props.onChildEdition({name: _name.value, birthday: _birthday.value});
         _name.value = '';
         _birthday.value = null;
     }
@@ -51,7 +51,7 @@ const EditChild = (props) => {
 EditChild.propTypes = {
     name: PropTypes.string,
     birthday: PropTypes.string,
-    onChildEditing: PropTypes.func,
+    onChildEdition: PropTypes.func,
     onHide: PropTypes.func
 }
 

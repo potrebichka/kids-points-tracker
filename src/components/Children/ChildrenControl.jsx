@@ -44,7 +44,7 @@ class ChildrenControl extends React.Component {
     }
 
 
-    handleChildEditing = (updatedChild) => {
+    handleChildEdition = (updatedChild) => {
         const updatedChildState = {...this.state.children, [updatedChild.id]: updatedChild};
         this.setState({children: updatedChildState});
         const id = updatedChild.id;
@@ -78,7 +78,7 @@ class ChildrenControl extends React.Component {
                                         name={this.state.children[childId].name} 
                                         birthday={this.state.children[childId].birthday} 
                                         points={this.state.children[childId].points}
-                                        onChildEdition={this.handleChildEditing} 
+                                        onChildEdition={this.handleChildEdition} 
                                         key={childId} 
                                         onDeleteClick={() => {this.handleChildDeletion(childId)}}/>
                             })
