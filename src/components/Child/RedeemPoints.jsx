@@ -13,7 +13,6 @@ class RedeemPoints extends React.Component {
             showItems: false,
             showQuantity: false,
             showRedeemButton: false,
-            showComment: false
         };
 
         this._category = null;
@@ -90,18 +89,18 @@ class RedeemPoints extends React.Component {
                                     type="number" 
                                     name="quantity" 
                                     className="select"
-                                    onChange={(input) => {this.setState({showComment: true}); this._quantity = input}}
+                                    onChange={(input) => {this.setState({showRedeemButton: true}); this._quantity = input}}
                                     placeholder=" Quantity"
                                     ref={(input) => this._quantity = input}/>
                             </Form.Group>
                         : null}
-                        {this.state.showComment ?
+                        {this.state.showRedeemButton ?
                             <Form.Group style={{"textAlign": "center"}}>
                                 <input 
                                     type="text" 
                                     name="comment" 
                                     className="select"
-                                    onChange={(input) => {this.setState({showRedeemButton: true}); this._comment = input}}
+                                    onChange={(input) => {this._comment = input}}
                                     placeholder=" Comment"
                                     ref={(input) => this._comment = input}/>
                         </Form.Group>
