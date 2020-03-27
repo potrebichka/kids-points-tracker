@@ -28,7 +28,7 @@ const NewItem = (props) => {
                         <Form.Control 
                             type="text"
                             id="name"
-                            placeholder="Name of category" 
+                            placeholder="Name of item" 
                             ref={(input) => {_name = input;}}>
                         </Form.Control>
                     </Form.Group>
