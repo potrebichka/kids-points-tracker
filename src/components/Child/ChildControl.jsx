@@ -7,6 +7,8 @@ import ShowHistory from './ShowHistory';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 
+import AuthContext from '../../hoc/AuthContext';
+
 class ChildControl extends React.Component {
     constructor(props) {
         super(props);
@@ -21,12 +23,14 @@ class ChildControl extends React.Component {
         }
     }
 
+    static contextType = AuthContext;
+
     componentDidMount() {
         this.updateState();
     }
 
     updateState() {
-        if (this.props.auth) {
+        if (this.context.authenticated) {
             this.props.firebase.dbRef.ref("children/" + this.props.firebase.auth.currentUser.uid + "/" + this.props.id).once("value")
                 .then(snapshot => 
                 {
@@ -100,7 +104,7 @@ class ChildControl extends React.Component {
     }
 
     render(){
-        if (!this.props.auth) {
+        if (!this.context.authenticated) {
             return <Redirect to="/" />
         }
 

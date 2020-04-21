@@ -4,6 +4,8 @@ import CategoryControl from './CategoryControl';
 import NewCategory from './NewCategory';
 import {Button} from 'react-bootstrap';
 
+import AuthContext from '../../hoc/AuthContext';
+
 class CategoriesControl extends React.Component {
     constructor(props) {
         super(props);
@@ -12,9 +14,11 @@ class CategoriesControl extends React.Component {
             showCreateNewCategoryForm: false,
         }
     }
+
+    static contextType = AuthContext;
     
     componentDidMount() {
-        if (this.props.auth) {
+        if (this.context.authenticated) {
             this.props.firebase.dbRef.ref("/categories/" + this.props.firebase.auth.currentUser.uid).once("value")
                 .then(snapshot => {
                     let newCategoriesList = {...this.state.categories};
@@ -61,7 +65,7 @@ class CategoriesControl extends React.Component {
     }
     
     render() {
-        if (!this.props.auth) {
+        if (!this.context.authenticated) {
             return <Redirect to='/'/>
         }
         return (

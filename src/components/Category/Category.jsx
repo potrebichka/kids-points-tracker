@@ -4,15 +4,18 @@ import {Redirect} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import NewItem from './NewItem';
 
+import AuthContext from '../../hoc/AuthContext';
+
 class Category extends React.Component {
     constructor(props) {
         super(props);
         this.state = {name: "", items: {}, id: null, showCreateNewItemForm: false}
     }
     
+    static contextType = AuthContext;
 
     componentDidMount() {
-        if (this.props.auth) {
+        if (this.context.authenticated) {
             this.setState({id: this.props.id, name: this.props.name, items: this.props.items})
         }
     }
@@ -48,7 +51,7 @@ class Category extends React.Component {
     }
 
     render() {
-        if (!this.props.auth) {
+        if (!this.context.authenticated) {
             return <Redirect to="/"/>
         }
         return (

@@ -13,6 +13,7 @@ import ChildRoute from './components/Child/ChildRoute';
 import Error404 from './components/Error404';
 
 import {FirebaseContext} from './components/Firebase';
+import AuthContext from './hoc/AuthContext';
 
 class App extends React.Component {
   state = {
@@ -34,19 +35,21 @@ class App extends React.Component {
           </FirebaseContext.Consumer> : 
         null}
         <div className="opacity">
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <FirebaseContext.Consumer>
-            {firebase => {return <div>
-            <Route exact path='/children' render={() => <ChildrenControl auth={this.state.auth} firebase={firebase}/>}/>
-            <Route exact path="/categories" render={() => <CategoriesControl auth={this.state.auth} firebase={firebase}/>}/>
-            <Route path="/categories/:id" render={(props)=> <CategoryRoute {...props} auth={this.state.auth} firebase={firebase} />} />
-            <Route path="/children/:id" render={() => <ChildRoute auth={this.state.auth} firebase={firebase} />} />
-            </div>
-            }}
-          </FirebaseContext.Consumer>
-          <Route component={Error404} />
-        </Switch>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <AuthContext.Provider value={{authenticated: this.state.auth}}>
+              <FirebaseContext.Consumer>
+                {firebase => {return <div>
+                <Route exact path='/children' render={() => <ChildrenControl firebase={firebase}/>}/>
+                <Route exact path="/categories" render={() => <CategoriesControl firebase={firebase}/>}/>
+                <Route path="/categories/:id" render={(props)=> <CategoryRoute {...props} firebase={firebase} />} />
+                <Route path="/children/:id" render={() => <ChildRoute firebase={firebase} />} />
+                </div>
+                }}
+              </FirebaseContext.Consumer>
+            </AuthContext.Provider>
+            <Route component={Error404} />
+          </Switch>
         </div>
       </div>
     );

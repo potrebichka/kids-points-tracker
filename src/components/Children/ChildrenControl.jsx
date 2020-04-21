@@ -3,6 +3,8 @@ import {Redirect} from 'react-router-dom';
 import Child from '../Child';
 import NewChild from './NewChild';
 
+import AuthContext from '../../hoc/AuthContext';
+
 class ChildrenControl extends React.Component {
     constructor(props) {
         super(props);
@@ -12,8 +14,10 @@ class ChildrenControl extends React.Component {
         }
     }
 
+    static contextType = AuthContext;
+
     componentDidMount() {
-        if (this.props.auth) {
+        if (this.context.authenticated) {
             this.props.firebase.dbRef.ref("children/" + this.props.firebase.auth.currentUser.uid).once("value")
                 .then(snapshot => 
                     {
@@ -60,7 +64,7 @@ class ChildrenControl extends React.Component {
     }
 
     render() {
-        if (!this.props.auth) {
+        if (!this.context.authenticated) {
             return <Redirect to="/"/>
         }
         return (
